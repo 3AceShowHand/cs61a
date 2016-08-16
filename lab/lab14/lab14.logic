@@ -1,0 +1,35 @@
+; Expected behavior:
+;
+; logic> (query (nest (1 2 3 4 5) ?nested))
+; Success!
+; nested: (1 (2 (3 (4 (5 ())))))
+
+; YOUR CODE HERE
+
+(fact (fruits apple banana cherry date elderberry fig guava))
+
+; YOUR CODE HERE
+
+; (query (fruits-tail date elderberry fig guava))
+; expect Success!
+; (query (fruits-tail banana . ?after-banana))
+; expect Success! ; after-banana: (cherry date elderberry fig guava)
+; (query (fruits-tail ?e fig guava))
+; expect Success! ; e: elderberry
+
+(fact (prefix () ?s))
+(fact (prefix (?first . ?p) (?first . ?s))
+      (prefix ?p ?s))
+
+; YOUR CODE HERE
+
+; (query (fruit-range cherry guava (date elderberry fig)))
+; expect Success!
+; (query (fruit-range cherry elderberry date))
+; expect Failed.
+; (query (fruit-range cherry elderberry ?between))
+; expect Success! ; between: (date)
+; (query (fruit-range cherry date ()))
+; expect Failed.
+; (query (fruit-range banana fig ?between))
+; expect Success! ; between: (cherry date elderberry)

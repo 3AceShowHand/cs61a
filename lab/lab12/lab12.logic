@@ -1,0 +1,7 @@
+; Q1
+(fact (append () ?b ?b))
+(fact (append (?a . ?r) ?y (?a . ?z))
+      (append ?r ?y ?z))
+
+; Q2
+; Define the last-element relation here!

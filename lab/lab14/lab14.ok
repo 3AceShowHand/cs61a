@@ -1,0 +1,30 @@
+{
+    "name": "Lab 14",
+    "endpoint": "cal/cs61a/su16/lab14",
+    "src": [
+        "lab14.py",
+        "lab14.scm",
+        "lab14.logic"
+    ],
+    "tests": {
+        "lab14.py:Keyboard": "doctest",
+        "lab14.py:every_other": "doctest",
+        "lab14.py:long_paths": "doctest",
+        "lab14.py:remainders_generator": "doctest",
+        "tests/foldl.py":"ok_test",
+        "tests/foldr.py":"ok_test",
+        "tests/map.py":"ok_test",
+        "tests/tally.py":"ok_test",
+        "tests/nest.py":"ok_test",
+        "tests/fruits.py":"ok_test",
+        "lab14.py:judge": "doctest"
+    },
+    "protocols": [
+        "restore",
+        "file_contents",
+        "unlock",
+        "grading",
+        "analytics",
+        "backup"
+    ]
+}
