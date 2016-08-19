@@ -1,5 +1,3 @@
-HW_SOURCE_FILE = 'hw02.py'
-
 def square(x):
     return x * x
 
@@ -11,6 +9,24 @@ def identity(x):
 
 def increment(x):
     return x + 1
+
+
+def piecewise(f, g, b):
+    """Returns the piecewise function h where:
+
+    h(x) = f(x) if x < b,
+           g(x) otherwise
+
+    >>> def negate(x):
+    ...     return -x
+    >>> abs_value = piecewise(negate, identity, 0)
+    >>> abs_value(6)
+    6
+    >>> abs_value(-1)
+    1
+    """
+    "*** YOUR CODE HERE ***"
+
 
 def product(n, term):
     """Return the product of the first n terms in a sequence.
@@ -36,19 +52,14 @@ def factorial(n):
     24
     >>> factorial(6)
     720
-    >>> from construct_check import check
-    >>> check(HW_SOURCE_FILE, 'factorial', ['Recursion', 'For', 'While'])
-    True
     """
     "*** YOUR CODE HERE ***"
-    return _______
+
 
 from operator import add, mul
 
 def accumulate(combiner, base, n, term):
-    """Return the result of combining the first n terms in a sequence and base.
-    The terms to be combined are term(1), term(2), ..., term(n).  combiner is a
-    two-argument commutative function.
+    """Return the result of combining the first n terms in a sequence.
 
     >>> accumulate(add, 0, 5, identity)  # 0 + 1 + 2 + 3 + 4 + 5
     15
@@ -64,20 +75,14 @@ def accumulate(combiner, base, n, term):
     "*** YOUR CODE HERE ***"
 
 def summation_using_accumulate(n, term):
-    """Returns the sum of term(1) + ... + term(n). The implementation
-    uses accumulate.
+    """An implementation of summation using accumulate.
 
     >>> summation_using_accumulate(5, square)
     55
     >>> summation_using_accumulate(5, triple)
     45
-    >>> from construct_check import check
-    >>> check(HW_SOURCE_FILE, 'summation_using_accumulate',
-    ...       ['Recursion', 'For', 'While'])
-    True
     """
     "*** YOUR CODE HERE ***"
-    return _______
 
 def product_using_accumulate(n, term):
     """An implementation of product using accumulate.
@@ -86,45 +91,9 @@ def product_using_accumulate(n, term):
     576
     >>> product_using_accumulate(6, triple)
     524880
-    >>> from construct_check import check
-    >>> check(HW_SOURCE_FILE, 'product_using_accumulate',
-    ...       ['Recursion', 'For', 'While'])
-    True
     """
     "*** YOUR CODE HERE ***"
-    return _______
 
-def filtered_accumulate(combiner, base, pred, n, term):
-    """Return the result of combining the terms in a sequence of N terms
-    that satisfy the predicate PRED.  COMBINER is a two-argument function.
-    If v1, v2, ..., vk are the values in TERM(1), TERM(2), ..., TERM(N)
-    that satisfy PRED, then the result is
-         BASE COMBINER v1 COMBINER v2 ... COMBINER vk
-    (treating COMBINER as if it were a binary operator, like +). The
-    implementation uses accumulate.
-
-    >>> filtered_accumulate(add, 0, lambda x: True, 5, identity)  # 0 + 1 + 2 + 3 + 4 + 5
-    15
-    >>> filtered_accumulate(add, 11, lambda x: False, 5, identity) # 11
-    11
-    >>> filtered_accumulate(add, 0, odd, 5, identity)   # 0 + 1 + 3 + 5
-    9
-    >>> filtered_accumulate(mul, 1, greater_than_5, 5, square)  # 1 * 9 * 16 * 25
-    3600
-    >>> # Do not use while/for loops or recursion
-    >>> from construct_check import check
-    >>> check(HW_SOURCE_FILE, 'filtered_accumulate',
-    ...       ['While', 'For', 'Recursion', 'FunctionDef'])
-    True
-    """
-    "*** YOUR CODE HERE ***"
-    return _______
-
-def odd(x):
-    return x % 2 == 1
-
-def greater_than_5(x):
-    return x > 5
 
 def repeated(f, n):
     """Return the function that computes the nth application of f.
@@ -138,8 +107,6 @@ def repeated(f, n):
     625
     >>> repeated(square, 4)(5) # square(square(square(square(5))))
     152587890625
-    >>> repeated(square, 0)(5)
-    5
     """
     "*** YOUR CODE HERE ***"
 
@@ -211,3 +178,4 @@ def pow_church(m, n):
     9
     """
     "*** YOUR CODE HERE ***"
+

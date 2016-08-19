@@ -1,224 +1,168 @@
-############
-# Mutation #
-############
+class Link:
+    """A linked list.
 
-def make_withdraw(balance, password):
-    """Return a password-protected withdraw function.
-
-    >>> w = make_withdraw(100, 'hax0r')
-    >>> w(25, 'hax0r')
-    75
-    >>> w(90, 'hax0r')
-    'Insufficient funds'
-    >>> w(25, 'hwat')
-    'Incorrect password'
-    >>> w(25, 'hax0r')
-    50
-    >>> w(75, 'a')
-    'Incorrect password'
-    >>> w(10, 'hax0r')
-    40
-    >>> w(20, 'n00b')
-    'Incorrect password'
-    >>> w(10, 'hax0r')
-    "Your account is locked. Attempts: ['hwat', 'a', 'n00b']"
-    >>> w(10, 'l33t')
-    "Your account is locked. Attempts: ['hwat', 'a', 'n00b']"
+    >>> s = Link(3, Link(4, Link(5)))
+    >>> len(s)
+    3
+    >>> s[2]
+    5
+    >>> s
+    Link(3, Link(4, Link(5)))
     """
-    "*** YOUR CODE HERE ***"
+    empty = ()
 
-def make_joint(withdraw, old_password, new_password):
-    """Return a password-protected withdraw function that has joint access to
-    the balance of withdraw.
+    def __init__(self, first, rest=empty):
+        assert rest is Link.empty or isinstance(rest, Link)
+        self.first = first
+        self.rest = rest
 
-    >>> w = make_withdraw(100, 'hax0r')
-    >>> w(25, 'hax0r')
-    75
-    >>> make_joint(w, 'my', 'secret')
-    'Incorrect password'
-    >>> j = make_joint(w, 'hax0r', 'secret')
-    >>> w(25, 'secret')
-    'Incorrect password'
-    >>> j(25, 'secret')
-    50
-    >>> j(25, 'hax0r')
-    25
-    >>> j(100, 'secret')
-    'Insufficient funds'
-
-    >>> j2 = make_joint(j, 'secret', 'code')
-    >>> j2(5, 'code')
-    20
-    >>> j2(5, 'secret')
-    15
-    >>> j2(5, 'hax0r')
-    10
-
-    >>> j2(25, 'password')
-    'Incorrect password'
-    >>> j2(5, 'secret')
-    "Your account is locked. Attempts: ['my', 'secret', 'password']"
-    >>> j(5, 'secret')
-    "Your account is locked. Attempts: ['my', 'secret', 'password']"
-    >>> w(5, 'hax0r')
-    "Your account is locked. Attempts: ['my', 'secret', 'password']"
-    >>> make_joint(w, 'hax0r', 'hello')
-    "Your account is locked. Attempts: ['my', 'secret', 'password']"
-    """
-    "*** YOUR CODE HERE ***"
-
-###########
-# Objects #
-###########
-
-class VendingMachine:
-    """A vending machine that vends some product for some price.
-
-    >>> v = VendingMachine('candy', 10)
-    >>> v.vend()
-    'Machine is out of stock.'
-    >>> v.restock(2)
-    'Current candy stock: 2'
-    >>> v.vend()
-    'You must deposit $10 more.'
-    >>> v.deposit(7)
-    'Current balance: $7'
-    >>> v.vend()
-    'You must deposit $3 more.'
-    >>> v.deposit(5)
-    'Current balance: $12'
-    >>> v.vend()
-    'Here is your candy and $2 change.'
-    >>> v.deposit(10)
-    'Current balance: $10'
-    >>> v.vend()
-    'Here is your candy.'
-    >>> v.deposit(15)
-    'Machine is out of stock. Here is your $15.'
-
-    >>> w = VendingMachine('soda', 2)
-    >>> w.restock(3)
-    'Current soda stock: 3'
-    >>> w.deposit(2)
-    'Current balance: $2'
-    >>> w.vend()
-    'Here is your soda.'
-    """
-    "*** YOUR CODE HERE ***"
-
-class MissManners:
-    """A container class that only forward messages that say please.
-
-    >>> v = VendingMachine('teaspoon', 10)
-    >>> v.restock(2)
-    'Current teaspoon stock: 2'
-
-    >>> m = MissManners(v)
-    >>> m.ask('vend')
-    'You must learn to say please first.'
-    >>> m.ask('please vend')
-    'You must deposit $10 more.'
-    >>> m.ask('please deposit', 20)
-    'Current balance: $20'
-    >>> m.ask('now will you vend?')
-    'You must learn to say please first.'
-    >>> m.ask('please hand over a teaspoon')
-    'Thanks for asking, but I know not how to hand over a teaspoon.'
-    >>> m.ask('please vend')
-    'Here is your teaspoon and $10 change.'
-
-    >>> really_fussy = MissManners(m)
-    >>> really_fussy.ask('deposit', 10)
-    'You must learn to say please first.'
-    >>> really_fussy.ask('please deposit', 10)
-    'Thanks for asking, but I know not how to deposit.'
-    >>> really_fussy.ask('please please deposit', 10)
-    'Thanks for asking, but I know not how to please deposit.'
-    >>> really_fussy.ask('please ask', 'please deposit', 10)
-    'Current balance: $10'
-    """
-    "*** YOUR CODE HERE ***"
-
-#############
-# Challenge #
-#############
-
-# Implementing an Object System
-
-def make_instance(cls):
-    """Return a new instance of the `cls` class."""
-    attributes = {}  # instance attributes, e.g. {'a': 6, 'b': 1}
-
-    def get_value(name):
-        "*** YOUR CODE HERE ***"
-
-    def set_value(name, value):
-        "*** YOUR CODE HERE ***"
-
-    instance = {'get': get_value, 'set': set_value} # dispatch dictionary
-    return instance
-
-def bind_method(function, instance):
-    "*** YOUR CODE HERE ***"
-
-def make_class(attributes={}):
-    def get_value(name):
-        if name in attributes: # name is a class attribute
-            return attributes[name]
+    def __getitem__(self, i):
+        if i == 0:
+            return self.first
         else:
-            return None
+            return self.rest[i-1]
 
-    def set_value(name, value):
-        attributes[name] = value
+    def __len__(self):
+        return 1 + len(self.rest)
 
-    def __new__(*args):
-        instance = make_instance(cls)
-        return init_instance(instance, *args)
+    def __repr__(self):
+        if self.rest:
+            rest_str = ', ' + repr(self.rest)
+        else:
+            rest_str = ''
+        return 'Link({0}{1})'.format(self.first, rest_str)
 
-    cls = {'get': get_value, 'set': set_value, 'new': __new__}
-    return cls
 
-def init_instance(instance, *args):
+class Tree:
+    def __init__(self, entry, branches=()):
+        self.entry = entry
+        for branch in branches:
+            assert isinstance(branch, Tree)
+        self.branches = list(branches)
+
+    def __repr__(self):
+        if self.branches:
+            branches_str = ', ' + repr(self.branches)
+        else:
+            branches_str = ''
+        return 'Tree({0}{1})'.format(self.entry, branches_str)
+
+    def is_leaf(self):
+        return not self.branches
+
+
+
+def every_other(s):
+    """Mutates a linked list so that all the odd-indiced elements are removed
+    (using 0-based indexing).
+
+    >>> s = Link(1, Link(2, Link(3, Link(4))))
+    >>> every_other(s)
+    >>> s
+    Link(1, Link(3))
+    >>> odd_length = Link(5, Link(3, Link(1)))
+    >>> every_other(odd_length)
+    >>> odd_length
+    Link(5, Link(1))
+    >>> singleton = Link(4)
+    >>> every_other(singleton)
+    >>> singleton
+    Link(4)
+    """
     "*** YOUR CODE HERE ***"
 
-def make_account_class():
-    """Return the Account class, which has deposit and withdraw methods.
 
-    >>> Account = make_account_class()
-    >>> brian_acct = Account['new']('Brian')
-    >>> brian_acct['get']('holder')
-    'Brian'
-    >>> brian_acct['get']('interest')
-    0.02
-    >>> brian_acct['get']('deposit')(20)
-    20
-    >>> brian_acct['get']('withdraw')(5)
-    15
+def mutate_reverse(link):
+    """Mutates the Link so that its elements are reversed.
 
-    >>> brian_acct['get']('balance')
-    15
-    >>> brian_acct['set']('interest', 0.08)
-    >>> Account['get']('interest')
-    0.02
-    >>> brian_acct['get']('interest')
-    0.08
+    >>> link = Link(1)
+    >>> mutate_reverse(link)
+    >>> link
+    Link(1)
+
+    >>> link = Link(1, Link(2, Link(3)))
+    >>> mutate_reverse(link)
+    >>> link
+    Link(3, Link(2, Link(1)))
     """
-    interest = 0.02
+    "*** YOUR CODE HERE ***"
 
-    def __init__(self, account_holder):
-        self['set']('balance', 0)
-        self['set']('holder', account_holder)
 
-    def deposit(self, amt):
-        balance = self['get']('balance') + amt
-        self['set']('balance', balance)
-        return self['get']('balance')
+def long_paths(tree, n):
+    """Return a list all paths in tree with length at least n.
 
-    def withdraw(self, amt):
-        balance = self['get']('balance')
-        if amt > balance:
-            return 'Insufficient funds'
-        self['set']('balance', balance - amt)
-        return self['get']('balance')
+    >>> t = Tree(3, [Tree(4), Tree(4), Tree(5)])
+    >>> left = Tree(1, [Tree(2), t])
+    >>> mid = Tree(6, [Tree(7, [Tree(8)]), Tree(9)])
+    >>> right = Tree(11, [Tree(12)])
+    >>> whole = Tree(0, [left, Tree(13), mid, right])
+    >>> for path in long_paths(whole, 2):
+    ...     print(path)
+    ...
+    Link(0, Link(1, Link(2)))
+    Link(0, Link(1, Link(3, Link(4))))
+    Link(0, Link(1, Link(3, Link(4))))
+    Link(0, Link(1, Link(3, Link(5))))
+    Link(0, Link(6, Link(7, Link(8))))
+    Link(0, Link(6, Link(9)))
+    Link(0, Link(11, Link(12)))
+    >>> for path in long_paths(whole, 3):
+    ...     print(path)
+    ...
+    Link(0, Link(1, Link(3, Link(4))))
+    Link(0, Link(1, Link(3, Link(4))))
+    Link(0, Link(1, Link(3, Link(5))))
+    Link(0, Link(6, Link(7, Link(8))))
+    >>> long_paths(whole, 4)
+    []
+    """
+    "*** YOUR CODE HERE ***"
 
-    return make_class(locals())
+def partial_tree(s, n):
+    """Return a balanced tree of the first n elements of Link s, along with
+    the rest of s.
+
+    Examples of balanced trees:
+
+    Tree(1)                      # leaf
+    Tree(1, [Tree(2)])           # one branch is a leaf
+    Tree(1, [Tree(2), Tree(3)])  # two branches with one node each
+
+    Examples of unbalanced trees:
+
+    Tree(1, [Tree(2, [Tree(3)])])            # one branch not a leaf
+    Tree(1, [Tree(2),                        # Mismatch: branch with 1 node
+             Tree(3, [Tree(4, [Tree(5)])])]) #        vs branch with 3 nodes
+
+    >>> s = Link(1, Link(2, Link(3, Link(4, Link(5)))))
+    >>> partial_tree(s, 3)
+    (Tree(2, [Tree(1), Tree(3)]), Link(4, Link(5)))
+    >>> t = Link(-2, Link(-1, Link(0, s)))
+    >>> partial_tree(t, 7)[0]
+    Tree(1, [Tree(-1, [Tree(-2), Tree(0)]), Tree(3, [Tree(2), Tree(4)])])
+    >>> partial_tree(t, 7)[1]
+    Link(5)
+    """
+    if n == 1:
+        return (Tree(s.first), s.rest)
+    elif n == 2:
+        return (Tree(s.first, [Tree(s.rest.first)]), s.rest.rest)
+    else:
+        left_size = (n-1)//2
+        right_size = n - left_size - 1
+        "*** YOUR CODE HERE ***"
+
+def sequence_to_tree(s):
+    """Return a balanced tree containing the elements of sorted Link s.
+
+    Note: this implementation is complete, but the definition of partial_tree
+    above is not complete.
+
+    >>> sequence_to_tree(Link(1, Link(2, Link(3))))
+    Tree(2, [Tree(1), Tree(3)])
+    >>> elements = Link(1, Link(2, Link(3, Link(4, Link(5, Link(6, Link(7)))))))
+    >>> sequence_to_tree(elements)
+    Tree(4, [Tree(2, [Tree(1), Tree(3)]), Tree(6, [Tree(5), Tree(7)])])
+    """
+    return partial_tree(s, len(s))[0]
+

@@ -1,6 +1,6 @@
 {
     "name": "Homework 3",
-    "endpoint": "cal/cs61a/su16/hw03",
+    "endpoint": "cal/cs61a/fa15/hw03",
     "src": [
         "hw03.py"
     ],
@@ -12,17 +12,13 @@
         "g_iter",
         "pingpong",
         "count_change",
-        "move_stack",
-        "flatten",
-        "merge",
-        "mergesort"
+        "move_stack"
     ],
     "protocols": [
         "restore",
         "file_contents",
         "grading",
         "analytics",
-        "backup",
-        "autostyle"
+        "backup"
     ]
 }

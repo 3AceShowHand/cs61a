@@ -1,5 +1,3 @@
-HW_SOURCE_FILE = 'hw03.py'
-
 def g(n):
     """Return the value of G(n), computed recursively.
 
@@ -13,9 +11,6 @@ def g(n):
     10
     >>> g(5)
     22
-    >>> from construct_check import check
-    >>> check(HW_SOURCE_FILE, 'g', ['While', 'For'])
-    True
     """
     "*** YOUR CODE HERE ***"
 
@@ -32,11 +27,9 @@ def g_iter(n):
     10
     >>> g_iter(5)
     22
-    >>> from construct_check import check
-    >>> check(HW_SOURCE_FILE, 'g_iter', ['Recursion'])
-    True
     """
     "*** YOUR CODE HERE ***"
+
 
 def pingpong(n):
     """Return the nth element of the ping-pong sequence.
@@ -65,9 +58,6 @@ def pingpong(n):
     0
     >>> pingpong(100)
     2
-    >>> from construct_check import check
-    >>> check(HW_SOURCE_FILE, 'pingpong', ['Assign', 'AugAssign'])
-    True
     """
     "*** YOUR CODE HERE ***"
 
@@ -94,6 +84,7 @@ def has_seven(k):
     else:
         return has_seven(k // 10)
 
+
 def count_change(amount):
     """Return the number of ways to make change for amount.
 
@@ -107,6 +98,7 @@ def count_change(amount):
     9828
     """
     "*** YOUR CODE HERE ***"
+
 
 def print_move(origin, destination):
     """Print instructions to move a disk."""
@@ -142,66 +134,14 @@ def move_stack(n, start, end):
     assert 1 <= start <= 3 and 1 <= end <= 3 and start != end, "Bad start/end"
     "*** YOUR CODE HERE ***"
 
-def flatten(lst):
-    """Returns a flattened version of lst.
-
-    >>> flatten([1, 2, 3])     # normal list
-    [1, 2, 3]
-    >>> x = [1, [2, 3], 4]      # deep list
-    >>> flatten(x)
-    [1, 2, 3, 4]
-    >>> x = [[1, [1, 1]], 1, [1, 1]] # deep list
-    >>> flatten(x)
-    [1, 1, 1, 1, 1, 1]
-    """
-    "*** YOUR CODE HERE ***"
-
-def merge(lst1, lst2):
-    """Merges two sorted lists.
-
-    >>> merge([1, 3, 5], [2, 4, 6])
-    [1, 2, 3, 4, 5, 6]
-    >>> merge([], [2, 4, 6])
-    [2, 4, 6]
-    >>> merge([1, 2, 3], [])
-    [1, 2, 3]
-    >>> merge([5, 7], [2, 4, 6])
-    [2, 4, 5, 6, 7]
-    """
-    "*** YOUR CODE HERE ***"
-
-def mergesort(seq):
-    """Mergesort algorithm.
-
-    >>> mergesort([4, 2, 5, 2, 1])
-    [1, 2, 2, 4, 5]
-    >>> mergesort([])     # sorting an empty list
-    []
-    >>> mergesort([1])   # sorting a one-element list
-    [1]
-    """
-    "*** YOUR CODE HERE ***"
-
-###################
-# Extra Questions #
-###################
 
 from operator import sub, mul
 
-def Y(f):
-    """The Y ("paradoxical") combinator."""
-    return f(lambda: Y(f))
+def make_anonymous_factorial():
+    """Return the value of an expression that computes factorial.
 
-
-def Y_tester():
-    """
-    >>> tmp = Y_tester()
-    >>> tmp(1)
-    1
-    >>> tmp(5)
+    >>> make_anonymous_factorial()(5)
     120
-    >>> tmp(2)
-    2
     """
-    "*** YOUR CODE HERE ***"
-    return Y(________)  # Replace 
+    return 'YOUR_EXPRESSION_HERE'
+
