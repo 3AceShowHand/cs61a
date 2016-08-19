@@ -1,25 +1,26 @@
 test = {
-  'name': 'sublists',
+  'name': 'size',
   'points': 1,
   'suites': [
     {
       'cases': [
         {
           'code': r"""
-          logic> (query (sublists (1 2 3) ?subs))
-          Success!
-          subs: (() (3) (2) (2 3) (1) (1 3) (1 2) (1 2 3))
+          sqlite> select * from sentences;
+          barack and clinton are standard siblings
+          abraham and grover are toy siblings
           """,
           'hidden': False,
           'locked': False
         }
       ],
+      'ordered': False,
       'scored': True,
       'setup': r"""
-      logic> (load hw09.logic)
+      sqlite> .read hw09.sql
       """,
       'teardown': '',
-      'type': 'logic'
+      'type': 'sqlite'
     }
   ]
 }

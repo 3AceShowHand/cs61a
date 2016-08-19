@@ -1,13 +1,13 @@
 test = {
-  'name': 'cadr-caddr',
+  'name': 'intersect',
   'points': 1,
   'suites': [
     {
       'cases': [
         {
           'code': r"""
-          scm> (cddr '(1 2 3 4))
-          1a182ccdac5b512e78d2db0e7cd35aae
+          scm> (intersect odds (list 2 3 4 5))
+          909d56987c11b3becce761b5871bdf47
           # locked
           """,
           'hidden': False,
@@ -15,8 +15,8 @@ test = {
         },
         {
           'code': r"""
-          scm> (cadr '(1 2 3 4))
-          bec7b0c91bdcb548cda9e9f3546cf0d7
+          scm> (intersect odds (list 2 4 6 8))  ; Empty list is ()
+          7b043779e02c43bdcd630251dbb3ebc9
           # locked
           """,
           'hidden': False,
@@ -24,8 +24,8 @@ test = {
         },
         {
           'code': r"""
-          scm> (caddr '(1 2 3 4))
-          400b880bd4ddd7622658a2c6ab1656de
+          scm> (intersect odds eight)
+          3bcf331630538e53425e07db90a89840
           # locked
           """,
           'hidden': False,
@@ -34,7 +34,9 @@ test = {
       ],
       'scored': True,
       'setup': r"""
-      scm> (load 'hw08)
+      scm> (load 'hw07)
+      scm> (define odds (list 3 5 7 9))
+      scm> (define eight (list 1 2 3 4 5 6 7 8))
       """,
       'teardown': '',
       'type': 'scheme'

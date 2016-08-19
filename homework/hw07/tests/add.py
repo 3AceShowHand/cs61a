@@ -1,13 +1,13 @@
 test = {
-  'name': 'ordered?',
+  'name': 'add',
   'points': 1,
   'suites': [
     {
       'cases': [
         {
           'code': r"""
-          scm> (ordered? '(1 2 3 4 5))  ; True or False
-          af2fd7905919be94e4d509e8239d5fd1
+          scm> (add odds 2)
+          c1f43b222f5f6e308e17941a6b97898f
           # locked
           """,
           'hidden': False,
@@ -15,8 +15,8 @@ test = {
         },
         {
           'code': r"""
-          scm> (ordered? '(1 5 2 4 3))  ; True or False
-          3cbee9249bf6c5fe6fce86debf3b010a
+          scm> (add odds 5)
+          244a1e3f51a6f4afe83944c26fbf7311
           # locked
           """,
           'hidden': False,
@@ -24,8 +24,8 @@ test = {
         },
         {
           'code': r"""
-          scm> (ordered? '(2 2))  ; True or False
-          af2fd7905919be94e4d509e8239d5fd1
+          scm> (add odds 6)
+          1b7995e61fcb2eaebbda782ef7cec54d
           # locked
           """,
           'hidden': False,
@@ -33,8 +33,8 @@ test = {
         },
         {
           'code': r"""
-          scm> (ordered? '(1 2 2 4 3))  ; True or False
-          3cbee9249bf6c5fe6fce86debf3b010a
+          scm> (add odds 10)
+          69d3c71b4d4f9b941dd1a197ddf3660c
           # locked
           """,
           'hidden': False,
@@ -43,7 +43,8 @@ test = {
       ],
       'scored': True,
       'setup': r"""
-      scm> (load 'hw08)
+      scm> (load 'hw07)
+      scm> (define odds (list 3 5 7 9))
       """,
       'teardown': '',
       'type': 'scheme'

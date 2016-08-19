@@ -1,13 +1,13 @@
 test = {
-  'name': 'union',
+  'name': 'cadr-caddr',
   'points': 1,
   'suites': [
     {
       'cases': [
         {
           'code': r"""
-          scm> (union odds (list 2 3 4 5))
-          b508d9788e632b435080d8782722d95a
+          scm> (cddr '(1 2 3 4))
+          0ed1a53f06011effab45b3ff5d11631b
           # locked
           """,
           'hidden': False,
@@ -15,8 +15,8 @@ test = {
         },
         {
           'code': r"""
-          scm> (union odds (list 2 4 6 8))
-          400dd77941418602f756fd5494d75871
+          scm> (cadr '(1 2 3 4))
+          9e912e512c4a5bd85d3693205c7f635c
           # locked
           """,
           'hidden': False,
@@ -24,8 +24,8 @@ test = {
         },
         {
           'code': r"""
-          scm> (union odds eight)
-          cf2b660c05a45a5cad9c9bfb2077b35f
+          scm> (caddr '(1 2 3 4))
+          b13af181ea4aa633930e92779ea49cee
           # locked
           """,
           'hidden': False,
@@ -34,9 +34,7 @@ test = {
       ],
       'scored': True,
       'setup': r"""
-      scm> (load 'hw08)
-      scm> (define odds (list 3 5 7 9))
-      scm> (define eight (list 1 2 3 4 5 6 7 8))
+      scm> (load 'hw07)
       """,
       'teardown': '',
       'type': 'scheme'

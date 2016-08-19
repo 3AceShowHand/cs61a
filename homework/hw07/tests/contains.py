@@ -1,13 +1,13 @@
 test = {
-  'name': 'intersect',
+  'name': 'contains?',
   'points': 1,
   'suites': [
     {
       'cases': [
         {
           'code': r"""
-          scm> (intersect odds (list 2 3 4 5))
-          7638e8948ede5d3e77ed8398cd51d78b
+          scm> (contains? odds 3)   ; True or False
+          60c2a5359961375936a02892ac434f71
           # locked
           """,
           'hidden': False,
@@ -15,8 +15,8 @@ test = {
         },
         {
           'code': r"""
-          scm> (intersect odds (list 2 4 6 8))  ; Empty list is ()
-          7e44d32911eb855f7a970358ab156a57
+          scm> (contains? odds 9)   ; True or False
+          60c2a5359961375936a02892ac434f71
           # locked
           """,
           'hidden': False,
@@ -24,8 +24,8 @@ test = {
         },
         {
           'code': r"""
-          scm> (intersect odds eight)
-          7af7860867135d752bc977360f3c6558
+          scm> (contains? odds 6)   ; True or False
+          30fee613b5f24feb0ea2d5089730e609
           # locked
           """,
           'hidden': False,
@@ -34,9 +34,8 @@ test = {
       ],
       'scored': True,
       'setup': r"""
-      scm> (load 'hw08)
+      scm> (load 'hw07)
       scm> (define odds (list 3 5 7 9))
-      scm> (define eight (list 1 2 3 4 5 6 7 8))
       """,
       'teardown': '',
       'type': 'scheme'

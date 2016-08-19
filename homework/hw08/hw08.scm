@@ -1,119 +1,16 @@
-(define (cddr s)
-  (cdr (cdr s)))
-
-(define (cadr s)
+(define (substitute s old new)
   'YOUR-CODE-HERE
-  nil
 )
 
-(define (caddr s)
+
+(define (sub-all s olds news)
   'YOUR-CODE-HERE
-  nil
 )
 
-(define (ordered? s)
-  'YOUR-CODE-HERE
-  nil
-)
 
-(define (nodots s)
-  'YOUR-CODE-HERE
-  nil
-)
-
-; Sets as sorted lists
-
-(define (empty? s) (null? s))
-
-(define (contains? s v)
-    (cond ((empty? s) false)
-          'YOUR-CODE-HERE
-          (else nil) ; replace this line
-          ))
-
-; Equivalent Python code, for your reference:
-;
-; def empty(s):
-;     return s is Link.empty
-;
-; def contains(s, v):
-;     if empty(s):
-;         return False
-;     elif s.first > v:
-;         return False
-;     elif s.first == v:
-;         return True
-;     else:
-;         return contains(s.rest, v)
-
-(define (add s v)
-    (cond ((empty? s) (list v))
-          'YOUR-CODE-HERE
-          (else nil) ; replace this line
-          ))
-
-(define (intersect s t)
-    (cond ((or (empty? s) (empty? t)) nil)
-          'YOUR-CODE-HERE
-          (else nil) ; replace this line
-          ))
-
-; Equivalent Python code, for your reference:
-;
-; def intersect(set1, set2):
-;     if empty(set1) or empty(set2):
-;         return Link.empty
-;     else:
-;         e1, e2 = set1.first, set2.first
-;         if e1 == e2:
-;             return Link(e1, intersect(set1.rest, set2.rest))
-;         elif e1 < e2:
-;             return intersect(set1.rest, set2)
-;         elif e2 < e1:
-;             return intersect(set1, set2.rest)
-
-(define (union s t)
-    (cond ((empty? s) t)
-          ((empty? t) s)
-          'YOUR-CODE-HERE
-          (else nil) ; replace this line
-          ))
-
-; A data abstraction for binary trees where nil represents the empty tree
-(define (tree label left right) (list label left right))
-(define (label t) (car t))
-(define (left t) (cadr t))
-(define (right t) (caddr t))
-(define (empty? s) (null? s))
-(define (leaf label) (tree label nil nil))
-
-(define (in? t v)
-    (cond ((empty? t) false)
-          'YOUR-CODE-HERE
-          (else nil)
-          ))
-
-; Equivalent Python code, for your reference:
-;
-; def contains(t, v):
-;     if t is BST.empty:
-;         return False
-;     elif t.entry == v:
-;         return True
-;     elif v < t.entry:
-;         return contains(t.left, v)
-;     elif v > t.entry:
-;         return contains(t.right, v)
-
-(define (as-list t)
-    'YOUR-CODE-HERE
-    (else nil)
-    )
-
-;; Extra Questions
-
-
-; derive returns the derivative of EXPR with respect to VAR
+(define (cadr s) (car (cdr s)))
+(define (caddr s) (car (cdr (cdr s))))
+; Derive returns the derivative of exp with respect to var.
 (define (derive expr var)
   (cond ((number? expr) 0)
         ((variable? expr) (if (same-variable? expr var) 1 0))
@@ -185,3 +82,4 @@
 (define (derive-exp exp var)
   'YOUR-CODE-HERE
   )
+
