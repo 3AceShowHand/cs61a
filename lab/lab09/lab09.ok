@@ -1,25 +1,30 @@
 {
-    "name": "Lab 9",
-    "endpoint": "cal/cs61a/su16/lab09",
+    "name": "Lab 09",
+    "endpoint": "cal/cs61a/fa15/lab09",
     "src": [
-        "lab09.py",
-        "lab09_extra.py",
-        "link.py"
+        "lab09.scm"
     ],
     "tests": {
-        "tests/does_it_work.py": "ok_test",
-        "tests/link.py": "ok_test",
-        "tests/restart.py": "ok_test",
-        "tests/odds_evens.py": "ok_test",
-        "tests/add.py": "ok_test",
-        "tests/reversed.py": "ok_test",
-        "tests/str.py": "ok_test",
-        "lab09.py": "doctest",
-        "lab09_extra.py:IteratorRestart": "doctest",
-        "lab09_extra.py:Str": "doctest"
+        "tests/wwsp.py": "ok_test",
+        "tests/cube.py": "ok_test",
+        "tests/over-or-under.py": "ok_test",
+        "tests/gcd.py": "ok_test",
+        "tests/make-list.py": "ok_test",
+        "tests/remove.py": "ok_test",
+        "tests/filter.py": "ok_test",
+        "tests/make-adder.py": "ok_test",
+        "tests/composed.py": "ok_test",
+        "tests/num-leaves.py": "ok_test",
+        "tests/accumulate.py": "ok_test"
     },
     "default_tests": [
-        "ScaleIterator"
+        "cube",
+        "over-or-under",
+        "make-list", 
+        "remove",
+        "filter",
+        "make-adder",
+        "composed"
     ],
     "protocols": [
         "restore",

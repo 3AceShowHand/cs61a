@@ -1,22 +1,22 @@
 {
     "name": "Lab 11",
-    "endpoint": "cal/cs61a/su16/lab11",
+    "endpoint": "cal/cs61a/fa15/lab11",
     "src": [
-        "expr.py",
-        "repl.py"
+        "lab11.py"
     ],
     "tests": {
-        "expr.py:Name.eval": "doctest",
-        "expr.py:CallExpr.eval": "doctest",
-        "expr.py:LambdaFunction.apply": "doctest",
-        "tests/prologue.py": "ok_test"
+        "tests/does_it_work.py": "ok_test",
+        "tests/restart.py": "ok_test",
+        "tests/generators.py": "ok_test",
+        "lab11.py": "doctest",
+        "lab11_extra.py": "doctest"
     },
     "protocols": [
         "restore",
         "file_contents",
-        "analytics",
         "unlock",
         "grading",
+        "analytics",
         "backup"
     ]
 }

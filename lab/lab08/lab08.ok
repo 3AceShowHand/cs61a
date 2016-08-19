@@ -1,26 +1,17 @@
 {
     "name": "Lab 8",
-    "endpoint": "cal/cs61a/su16/lab08",
+    "endpoint": "cal/cs61a/fa15/lab08",
     "src": [
-        "classes.py",
-        "data.py"
+        "lab08.py"
     ],
     "tests": {
-        "tests/prologue.py": "ok_test",
-        "tests/car.py": "ok_test",
-        "tests/me.py": "ok_test",
-        "classes.py:Player.go_to": "doctest",
-        "classes.py:Player.talk_to": "doctest",
-        "classes.py:Player.take": "doctest",
-        "classes.py:Player.unlock": "doctest",
-        "vending_machine.py": "doctest"
+        "tests/foobar.py": "ok_test",
+        "tests/attributes.py": "ok_test",
+        "lab08.py:make_advanced_counter_maker": "doctest",
+        "lab08.py:intersection": "doctest",
+        "lab08.py:trade": "doctest",
+        "tests/boom.py": "ok_test"
     },
-    "default_tests": [
-        "Player.go_to",
-        "Player.talk_to",
-        "Player.take",
-        "Player.unlock"
-    ],
     "protocols": [
         "restore",
         "file_contents",

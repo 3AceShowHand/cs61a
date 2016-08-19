@@ -1,22 +1,18 @@
 {
     "name": "Lab 12",
-    "endpoint": "cal/cs61a/su16/lab12",
+    "endpoint": "cal/cs61a/fa15/lab12",
     "src": [
-        "lab12.logic",
-        "lab12_extra.logic"
+        "lab12.sql",
+        "lab12_extra.sql"
     ],
     "tests": {
-        "tests/last-element.py": "ok_test",
-        "tests/firsts.py": "ok_test",
-        "tests/rests.py": "ok_test",
-        "tests/boxes.py": "ok_test",
-        "tests/rows.py": "ok_test",
-        "tests/cols.py": "ok_test",
-        "tests/solve.py": "ok_test"
+        "tests/obedience.py": "ok_test",
+        "tests/bluedog.py": "ok_test",
+        "tests/smallest-int.py": "ok_test",
+        "tests/sevens.py": "ok_test",
+        "tests/matchmaker.py": "ok_test",
+        "tests/smallest-int-count.py": "ok_test"
     },
-    "default_tests": [
-        "last-element"
-    ],
     "protocols": [
         "restore",
         "file_contents",

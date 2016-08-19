@@ -1,0 +1,23 @@
+test = {
+  'name': 'schedule',
+  'points': 0,
+  'suites': [
+    {
+      'type': 'sqlite',
+      'setup': """
+      sqlite> .read lab13.sql
+      """,
+      'cases': [
+        {
+          'locked': False,
+          'code': r"""
+          sqlite> SELECT * FROM schedule;
+          SFO, SLC, PDX|176
+          SFO, LAX, PDX|186
+          SFO, PDX|192
+          """,
+        },
+      ],
+    },
+  ]
+}
