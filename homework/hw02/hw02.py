@@ -1,11 +1,14 @@
 def square(x):
     return x * x
 
+
 def triple(x):
     return 3 * x
 
+
 def identity(x):
     return x
+
 
 def increment(x):
     return x + 1
@@ -26,6 +29,11 @@ def piecewise(f, g, b):
     1
     """
     "*** YOUR CODE HERE ***"
+    def h(x):
+        if x < b:
+            return f(x)
+        return g(x)
+    return h
 
 
 def product(n, term):
@@ -44,6 +52,11 @@ def product(n, term):
     14400
     """
     "*** YOUR CODE HERE ***"
+    sum = 1
+    for i in range(1, n+1):
+        sum *= term(i)
+    return sum
+
 
 def factorial(n):
     """Return n factorial for n >= 0 by calling product.
@@ -54,18 +67,20 @@ def factorial(n):
     720
     """
     "*** YOUR CODE HERE ***"
+    return n if n < 2 else n * factorial(n-1)
 
 
 from operator import add, mul
 
+
 def accumulate(combiner, base, n, term):
     """Return the result of combining the first n terms in a sequence.
 
-    >>> accumulate(add, 0, 5, identity)  # 0 + 1 + 2 + 3 + 4 + 5
+    >>> accumulate(add, 0, 5, identity)  # 1 + 2 + 3 + 4 + 5
     15
     >>> accumulate(add, 11, 5, identity) # 11 + 1 + 2 + 3 + 4 + 5
     26
-    >>> accumulate(add, 11, 0, identity) # 11
+    >>> accumulate(add, 11, 0, identity) # 11 
     11
     >>> accumulate(add, 11, 3, square)   # 11 + 1^2 + 2^2 + 3^2
     25
@@ -73,6 +88,12 @@ def accumulate(combiner, base, n, term):
     72
     """
     "*** YOUR CODE HERE ***"
+    ret = base
+    oprands = [term(x) for x in range(n+1) if x != 0]
+    for item in oprands:
+        ret = combiner(ret, item)
+    return ret
+
 
 def summation_using_accumulate(n, term):
     """An implementation of summation using accumulate.
@@ -83,6 +104,8 @@ def summation_using_accumulate(n, term):
     45
     """
     "*** YOUR CODE HERE ***"
+    return accumulate(add, 0, n, term)
+
 
 def product_using_accumulate(n, term):
     """An implementation of product using accumulate.
@@ -92,7 +115,7 @@ def product_using_accumulate(n, term):
     >>> product_using_accumulate(6, triple)
     524880
     """
-    "*** YOUR CODE HERE ***"
+    return accumulate(mul, 1, n, term)
 
 
 def repeated(f, n):
@@ -109,6 +132,15 @@ def repeated(f, n):
     152587890625
     """
     "*** YOUR CODE HERE ***"
+    def ret_fn(num):
+        i = 0
+        ret = num
+        while i in range(n):
+            ret = f(ret)
+            i += 1
+        return ret
+    return ret_fn
+
 
 def compose1(f, g):
     """Return a function h, such that h(x) = f(g(x))."""
@@ -123,18 +155,24 @@ def compose1(f, g):
 def zero(f):
     return lambda x: x
 
+
 def successor(n):
     return lambda f: lambda x: f(n(f)(x))
+
 
 def one(f):
     """Church numeral 1: same as successor(zero)"""
     "*** YOUR CODE HERE ***"
+    return lambda x: f(x)
+
 
 def two(f):
     """Church numeral 2: same as successor(successor(zero))"""
     "*** YOUR CODE HERE ***"
+    return lambda x: f(f(x))
 
 three = successor(two)
+
 
 def church_to_int(n):
     """Convert the Church numeral n to a Python integer.
@@ -149,6 +187,8 @@ def church_to_int(n):
     3
     """
     "*** YOUR CODE HERE ***"
+    return n(lambda x: x+1)(0)
+
 
 def add_church(m, n):
     """Return the Church numeral for m + n, for Church numerals m and n.
@@ -157,6 +197,8 @@ def add_church(m, n):
     5
     """
     "*** YOUR CODE HERE ***"
+    return lambda f: lambda x: m(f)(n(f)(x))
+
 
 def mul_church(m, n):
     """Return the Church numeral for m * n, for Church numerals m and n.
@@ -168,6 +210,8 @@ def mul_church(m, n):
     12
     """
     "*** YOUR CODE HERE ***"
+    return lambda f: n(m(f))
+
 
 def pow_church(m, n):
     """Return the Church numeral m ** n, for Church numerals m and n.
@@ -178,4 +222,4 @@ def pow_church(m, n):
     9
     """
     "*** YOUR CODE HERE ***"
-
+    return n(m)
