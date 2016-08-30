@@ -17,17 +17,15 @@ test = {
           ...     abed = 6 # seasons and a movie
           ...     return britta
           >>> jeff = troy()
-          b33f256984c474b4181f5512601c4a70
-          dcbe12f5edfd80d067e49a65db66d0b1
-          # locked
+          0
+          2
           >>> shirley = lambda: jeff
           >>> pierce = shirley()
           >>> pierce()
-          13e9492c801fddcd5c1330b411f26ac8
-          # locked
+          6
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         }
       ],
       'scored': False,

@@ -14,6 +14,11 @@ def make_derivative(f, h=1e-5):
     6.0
     """
     "*** YOUR CODE HERE ***"
+    def derivative(a):
+        dy = f(a + h) - f(a)
+        dx = h
+        return dy / dx
+    return derivative
 
 
 # String Transformers
@@ -43,8 +48,9 @@ def caesar_generator(num, op):
     >>> brutus3('d')
     'a'
     """
-    "*** YOUR CODE HERE ***"
-    return ______
+    def caesar_cipher(char):
+        return num_to_letter(op(letter_to_num(char), num))
+    return caesar_cipher
 
 
 # Encryption and Decryption
@@ -61,6 +67,10 @@ def make_encrypter(f1, f2, f3):
     """
     f1, f2, f3 = looper(f1), looper(f2), looper(f3)
     "*** YOUR CODE HERE ***"
+    def encrypter(s):
+        return f1(f2(f3(s)))
+    return encrypter
+
 
 def make_decrypter(f1, f2, f3):
     """Generates a "decrypter" function.
@@ -73,5 +83,8 @@ def make_decrypter(f1, f2, f3):
     """
     f1, f2, f3 = looper(f1), looper(f2), looper(f3)
     "*** YOUR CODE HERE ***"
+    def decrypter(s):
+        return f3(f2(f1(s)))
+    return decrypter
 
 

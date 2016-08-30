@@ -1,7 +1,9 @@
 """Optional program for lab02 """
 
-from lab02 import *
 import argparse
+
+from lab02 import *
+
 
 # Extra Question
 
@@ -18,7 +20,11 @@ def generator():
     True
     """
     "*** YOUR CODE HERE ***"
-    return None, None # Change this line
+    caesar2 = caesar_generator(2, add)
+    caesar3 = caesar_generator(3, add)
+    brutus2 = caesar_generator(2, sub)
+    brutus3 = caesar_generator(3, sub)
+    return make_encrypter(caesar2, mirror_letter, caesar3), make_decrypter(brutus2, mirror_letter, brutus3)
 
 
 encryptor, decryptor = generator()
@@ -48,6 +54,13 @@ def count_cond(condition):
     8
     """
     "*** YOUR CODE HERE ***"
+    def count(num):
+        counter = 0
+        for i in range(1, num+1):
+            if condition(num, i):
+                counter += 1
+        return counter
+    return count
 
 
 def cycle(f1, f2, f3):
@@ -76,6 +89,20 @@ def cycle(f1, f2, f3):
     19
     """
     "*** YOUR CODE HERE ***"
+    def ret_fn(n):
+        def ret(x):
+            i = 0
+            while i < n:
+                if i % 3 == 0:
+                    x = f1(x)
+                elif i % 3 == 1:
+                    x = f2(x)
+                else:
+                    x = f3(x)
+                i += 1
+            return x
+        return ret
+    return ret_fn
 
 
 # You can ignore the rest of this file.
