@@ -8,6 +8,10 @@ def skip_add(n):
     30
     """
     "*** YOUR CODE HERE ***"
+    if n > 0:
+        return n + skip_add(n - 2)
+    else:
+        return 0
 
 
 # Q2
@@ -93,6 +97,9 @@ def gcd(a, b):
     40
     """
     "*** YOUR CODE HERE ***"
+    if a < b:
+        a, b = b, a
+    return a if b == 0 else gcd(b, a % b)
 
 
 # Q7
@@ -112,6 +119,12 @@ def hailstone(n):
     7
     """
     "*** YOUR CODE HERE ***"
+    print(n)
+    if n == 1:
+        return 1
+    elif n % 2 == 0:
+        return 1 + hailstone(n // 2)
+    return 1 + hailstone(3 * n + 1)
 
 
 # Q8
@@ -130,8 +143,8 @@ def is_palindrome(n):
     True
     """
     x, y = n, 0
-    f = lambda: _____
+    f = lambda: y * 10 + x % 10
     while x > 0:
-        x, y = _____, f()
+        x, y = x // 10, f()
     return y == n
 

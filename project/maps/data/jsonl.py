@@ -8,8 +8,10 @@ True
 
 from json import loads, dumps
 
+
 def load(fp, **kw):
     return [loads(obj, **kw) for obj in fp]
+
 
 def dump(objs, fp, **kw):
     for obj in objs:
