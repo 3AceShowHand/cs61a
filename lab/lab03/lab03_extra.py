@@ -12,6 +12,7 @@ def summation(n, term):
         total, k = total + term(k), k + 1
     return total
 
+
 def interleaved_sum(n, odd_term, even_term):
     """Compute the sum odd_term(1) + even_term(2) + odd_term(3) + ..., up
     to n.
@@ -21,4 +22,11 @@ def interleaved_sum(n, odd_term, even_term):
     29
     """
     "*** YOUR CODE HERE ***"
+    total, k = 0, 1
+    while k <= n:
+        if k % 2 == 0:
+            total, k = total + even_term(k), k + 1
+        else:
+            total, k = total + odd_term(k), k + 1
+    return total
 
