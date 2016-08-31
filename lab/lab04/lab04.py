@@ -12,6 +12,11 @@ def if_this_not_that(i_list, this):
     5
     """
     "*** YOUR CODE HERE ***"
+    for item in i_list:
+        if item <= this:
+            print('that')
+        else:
+            print(item)
 
 
 # Q3
@@ -22,7 +27,7 @@ def reverse_iter(lst):
     [4, 3, 2, 1]
     """
     "*** YOUR CODE HERE ***"
-
+    return lst[::-1]
 
 
 # Q4
@@ -40,6 +45,13 @@ def closer_city(lat, lon, city1, city2):
         'Bucharest'
     """
     "*** YOUR CODE HERE ***"
+    city = ('', lat, lon)
+    distance1 = distance(city, city1)
+    distance2 = distance(city, city2)
+    if distance1 < distance2:
+        return get_name(city1)
+    return get_name(city2)
+
 
 # Connect N: Q5-11
 ######################
@@ -54,7 +66,8 @@ def create_row(size):
     ['-', '-', '-', '-', '-']
     """
     "*** YOUR CODE HERE ***"
-    return _______
+    return ['-' for i in range(size)]
+
 
 def create_board(rows, columns):
     """Returns a board with the given dimensions.
@@ -63,7 +76,8 @@ def create_board(rows, columns):
     [['-', '-', '-', '-', '-'], ['-', '-', '-', '-', '-'], ['-', '-', '-', '-', '-']]
     """
     "*** YOUR CODE HERE ***"
-    return _______
+    return [create_row(columns) for i in range(rows)]
+
 
 def replace_elem(lst, index, elem):
     """Create and return a new list whose elements are the same as those in
@@ -78,7 +92,8 @@ def replace_elem(lst, index, elem):
     """
     assert index >= 0 and index < len(lst), 'Index is out of bounds'
     "*** YOUR CODE HERE ***"
-    return _______
+    return lst[:index] + [elem] + lst[index+1:]
+
 
 def get_piece(board, row, column):
     """Returns the piece at location (row, column) in the board.
@@ -93,12 +108,12 @@ def get_piece(board, row, column):
     '-'
     """
     "*** YOUR CODE HERE ***"
-    return _______
+    return board[row][column]
+
 
 def put_piece(board, max_rows, column, player):
     """Puts PLAYER's piece in the bottommost empty spot in the given column of
     the board. Returns a tuple of two elements:
-        
         1. The index of the row the piece ends up in, or -1 if the column
            is full.
         2. The new board
@@ -145,6 +160,7 @@ def make_move(board, max_rows, max_cols, col, player):
     """
     "*** YOUR CODE HERE ***"
 
+
 def print_board(board, max_rows, max_cols):
     """Prints the board. Row 0 is at the top, and column 0 at the far left.
 
@@ -159,6 +175,7 @@ def print_board(board, max_rows, max_cols):
     X -
     """
     "*** YOUR CODE HERE ***"
+
 
 def check_win_row(board, max_rows, max_cols, num_connect, row, player):
     """ Returns True if the given player has a horizontal win
@@ -184,6 +201,7 @@ def check_win_row(board, max_rows, max_cols, num_connect, row, player):
     """
     "*** YOUR CODE HERE ***"
 
+
 def check_win_column(board, max_rows, max_cols, num_connect, col, player):
     """ Returns True if the given player has a vertical win in the given column,
     and otherwise False.
@@ -207,8 +225,9 @@ def check_win_column(board, max_rows, max_cols, num_connect, col, player):
     >>> check_win_column(board, rows, columns, num_connect, 1, 'X')
     False
     """
-    """
     "*** YOUR CODE HERE ***"
+
+
 
 def check_win(board, max_rows, max_cols, num_connect, row, col, player):
     """Returns True if the given player has any kind of win after placing a
@@ -245,7 +264,8 @@ def check_win(board, max_rows, max_cols, num_connect, row, col, player):
     diagonal_win = check_win_diagonal(board, max_rows, max_cols, num_connect,
                                       row, col, player)
     "*** YOUR CODE HERE ***"
-    return _______
+    return
+
 
 ###############################################################
 ### Functions for reference when solving the other problems ###
@@ -295,6 +315,7 @@ def check_win_diagonal(board, max_rows, max_cols, num_connect, row, col, player)
 
     return False
 
+
 #####################################################################################
 ### You do not need to read or understand the following code for this assignment. ###
 #####################################################################################
@@ -342,6 +363,7 @@ def play(board, max_rows, max_cols, num_connect):
             sys.exit()
 
         who = other(who)
+
 
 def start_game():
     # Get all parameters for the game from user.
