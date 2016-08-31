@@ -1,5 +1,6 @@
 from lab04 import *
 
+
 # Q12
 def flatten(lst):
     """Returns a flattened version of lst.
@@ -14,6 +15,12 @@ def flatten(lst):
     [1, 1, 1, 1, 1, 1]
     """
     "*** YOUR CODE HERE ***"
+    if not lst:
+        return []
+    elif type(lst[0]) == list:
+        return flatten(lst[0]) + flatten(lst[1:])
+    else:
+        return [lst[0]] + flatten(lst[1:])
 
 
 # Q13
@@ -30,5 +37,9 @@ def merge(lst1, lst2):
     [2, 4, 5, 6, 7]
     """
     "*** YOUR CODE HERE ***"
-
-
+    if not lst1 or not lst2:
+        return lst1 + lst2
+    elif lst1[0] < lst2[0]:
+        return [lst1[0]] + merge(lst1[1:], lst2)
+    else:
+        return [lst2[0]] + merge(lst1, lst2[1:])
