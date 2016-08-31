@@ -23,6 +23,13 @@ def diff(x, y, z):
     False
     """
     "*** YOUR CODE HERE ***"
+    if abs(x - y) == abs(z):
+        return True
+    elif abs(x-z) == abs(y):
+        return True
+    elif abs(y-z) == abs(x):
+        return True
+    return False
 
 
 def abundant(n):
@@ -64,6 +71,14 @@ def abundant(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    from math import ceil
+
+    divisors = [x for x in range(1, n+1) if n % x == 0]
+    length = len(divisors)
+    upper = ceil(length / 2)
+    for i in range(0, upper):
+        print(str(divisors[i]) + ' * ' + str(divisors[length-1-i]))
+    return sum(divisors[:-1]) > divisors[-1]
 
 
 def amicable(n):
