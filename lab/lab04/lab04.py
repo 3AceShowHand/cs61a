@@ -131,12 +131,19 @@ def put_piece(board, max_rows, column, player):
     -1
     """
     "*** YOUR CODE HERE ***"
+    current_row = max_rows - 1
+    while current_row >= 0 and get_piece(board, current_row, column) != '-':
+        current_row -= 1
+    if current_row >= 0:
+        new_row = replace_elem(board[current_row], column, player)
+        new_board = replace_elem(board, current_row, new_row)
+        board = new_board
+    return current_row, board
 
 
 def make_move(board, max_rows, max_cols, col, player):
     """Put player's piece in column COL of the board, if it is a valid move.
     Return a tuple of two values:
-        
         1. If the move is valid, make_move returns the index of the row the
            piece is placed in. Otherwise, it returns -1.
         2. The updated board
@@ -159,11 +166,13 @@ def make_move(board, max_rows, max_cols, col, player):
     -1
     """
     "*** YOUR CODE HERE ***"
+    if col >= 0 and col < max_cols:
+        return put_piece(board, max_rows, col, player)
+    return -1, board
 
 
 def print_board(board, max_rows, max_cols):
     """Prints the board. Row 0 is at the top, and column 0 at the far left.
-
     >>> rows, columns = 2, 2
     >>> board = create_board(rows, columns)
     >>> print_board(board, rows, columns)
@@ -175,6 +184,12 @@ def print_board(board, max_rows, max_cols):
     X -
     """
     "*** YOUR CODE HERE ***"
+    for row in range(max_rows):
+        row_str = ''
+        for col in range(max_cols):
+            piece = get_piece(board, row, col)
+            row_str += piece + ' '
+        print(row_str.strip())
 
 
 def check_win_row(board, max_rows, max_cols, num_connect, row, player):
@@ -200,6 +215,7 @@ def check_win_row(board, max_rows, max_cols, num_connect, row, player):
     False
     """
     "*** YOUR CODE HERE ***"
+    
 
 
 def check_win_column(board, max_rows, max_cols, num_connect, col, player):
