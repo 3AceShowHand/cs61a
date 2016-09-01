@@ -1,5 +1,6 @@
 from utils import *
 
+
 # Q2
 def if_this_not_that(i_list, this):
     """
@@ -192,6 +193,17 @@ def print_board(board, max_rows, max_cols):
         print(row_str.strip())
 
 
+def is_player(lst, player):
+    """
+    Returns True if items in the given lst all equals to player,
+    else False.
+    """
+    for item in lst:
+        if item != player:
+            return False
+    return True
+
+
 def check_win_row(board, max_rows, max_cols, num_connect, row, player):
     """ Returns True if the given player has a horizontal win
     in the given row, and otherwise False.
@@ -215,7 +227,13 @@ def check_win_row(board, max_rows, max_cols, num_connect, row, player):
     False
     """
     "*** YOUR CODE HERE ***"
-    
+    for start in range(max_cols - num_connect + 1):
+        connected = []
+        for idx in range(start, start + num_connect):
+            connected.append(board[row][idx])
+        if is_player(connected, player):
+            return True
+    return False
 
 
 def check_win_column(board, max_rows, max_cols, num_connect, col, player):
@@ -242,7 +260,13 @@ def check_win_column(board, max_rows, max_cols, num_connect, col, player):
     False
     """
     "*** YOUR CODE HERE ***"
-
+    for start in range(max_rows - num_connect + 1):
+        connected = []
+        for idx in range(start, start + num_connect):
+            connected.append(board[idx][col])
+        if is_player(connected, player):
+            return True
+    return False
 
 
 def check_win(board, max_rows, max_cols, num_connect, row, col, player):
@@ -279,8 +303,10 @@ def check_win(board, max_rows, max_cols, num_connect, row, col, player):
     """
     diagonal_win = check_win_diagonal(board, max_rows, max_cols, num_connect,
                                       row, col, player)
+    row_win = check_win_row(board, max_rows, max_cols, num_connect, row, player)
+    col_win = check_win_column(board, max_rows, max_cols, num_connect, col, player)
     "*** YOUR CODE HERE ***"
-    return
+    return diagonal_win or row_win or col_win
 
 
 ###############################################################
