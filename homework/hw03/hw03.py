@@ -13,6 +13,8 @@ def g(n):
     22
     """
     "*** YOUR CODE HERE ***"
+    1 2 3 10 22
+
 
 def g_iter(n):
     """Return the value of G(n), computed iteratively.
