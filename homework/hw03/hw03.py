@@ -13,7 +13,7 @@ def g(n):
     22
     """
     "*** YOUR CODE HERE ***"
-    1 2 3 10 22
+    return n if n <= 3 else g(n-1) + 2 * g(n-2) + 3 * g(n-3)
 
 
 def g_iter(n):
@@ -31,6 +31,14 @@ def g_iter(n):
     22
     """
     "*** YOUR CODE HERE ***"
+    lst = []
+    for idx in range(1, n+1):
+        if idx <= 3:
+            lst.append(idx)
+        else:
+            item = lst[-1] + 2 * lst[-2] + 3 * lst[-3]
+            lst.append(item)
+    return lst[-1]
 
 
 def pingpong(n):
@@ -62,6 +70,8 @@ def pingpong(n):
     2
     """
     "*** YOUR CODE HERE ***"
+    
+
 
 def has_seven(k):
     """Returns True if at least one of the digits of k is a 7, False otherwise.
