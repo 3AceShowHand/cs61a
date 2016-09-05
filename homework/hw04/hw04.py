@@ -12,6 +12,12 @@ def deep_len(lst):
     6
     """
     "*** YOUR CODE HERE ***"
+    if not lst:
+        return 0
+    elif type(lst[0]) == list:
+        return deep_len(lst[0]) + deep_len(lst[1:])
+    else:
+        return len([lst[0]]) + deep_len(lst[1:])
 
 
 def interval(a, b):
