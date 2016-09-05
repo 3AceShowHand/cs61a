@@ -165,7 +165,18 @@ def move_stack(n, start, end):
     """
     assert 1 <= start <= 3 and 1 <= end <= 3 and start != end, "Bad start/end"
     "*** YOUR CODE HERE ***"
-
+    """
+    如果只有一个盘，直接扔到最后一个柱子上。
+    如果存在多个盘，把顶上的所有盘子通过end柱子扔到一个helper上，然后将helper的所有盘子通过start扔到end上。
+    """
+    def hanoi(n, start, help, end):
+        if n == 1:
+            print_move(start, end)
+        else:
+            hanoi(n-1, start, end, help)
+            print_move(start, end)
+            hanoi(n-1, help, start, end)
+    hanoi(n, start, 6-start-end, end)
 
 
 from operator import mul, sub
@@ -177,4 +188,8 @@ def make_anonymous_factorial():
     >>> make_anonymous_factorial()(5)
     120
     """
-    return 'YOUR_EXPRESSION_HERE'
+    def factorial(n):
+        if n == 1:
+            return 1
+        return mul(n, factorial(sub(n, 1)))
+    return factorial
