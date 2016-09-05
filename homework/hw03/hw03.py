@@ -70,7 +70,19 @@ def pingpong(n):
     2
     """
     "*** YOUR CODE HERE ***"
-    
+    delta = 1
+    res = 0
+    for i in range(1, n+1):
+        res += delta
+        if res < 0 or is_seven(i):
+            delta = -1 * delta
+    return res
+
+
+def is_seven(k):
+    if k % 7 == 0 or has_seven(k):
+        return True
+    return False
 
 
 def has_seven(k):
@@ -110,11 +122,19 @@ def count_change(amount):
     9828
     """
     "*** YOUR CODE HERE ***"
+    def helper(amount, coin = 1):
+        if amount == 0:
+            return 1
+        elif amount < coin:
+            return 0
+        return helper(amount - coin, coin) + helper(amount, coin * 2)
+    return helper(amount)
 
 
 def print_move(origin, destination):
     """Print instructions to move a disk."""
     print("Move the top disk from rod", origin, "to rod", destination)
+
 
 def move_stack(n, start, end):
     """Print the moves required to move n disks on the start pole to the end
@@ -147,7 +167,9 @@ def move_stack(n, start, end):
     "*** YOUR CODE HERE ***"
 
 
-from operator import sub, mul
+
+from operator import mul, sub
+
 
 def make_anonymous_factorial():
     """Return the value of an expression that computes factorial.
@@ -156,4 +178,3 @@ def make_anonymous_factorial():
     120
     """
     return 'YOUR_EXPRESSION_HERE'
-
