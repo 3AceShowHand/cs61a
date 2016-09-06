@@ -23,14 +23,20 @@ def deep_len(lst):
 def interval(a, b):
     """Construct an interval from a to b."""
     "*** YOUR CODE HERE ***"
+    return a, b
+
 
 def lower_bound(x):
     """Return the lower bound of interval x."""
     "*** YOUR CODE HERE ***"
+    return min(x)
+
 
 def upper_bound(x):
     """Return the upper bound of interval x."""
     "*** YOUR CODE HERE ***"
+    return max(x)
+
 
 def str_interval(x):
     """Return a string representation of interval x.
@@ -39,6 +45,7 @@ def str_interval(x):
     '-1 to 2'
     """
     return '{0} to {1}'.format(lower_bound(x), upper_bound(x))
+
 
 def add_interval(x, y):
     """Return an interval that contains the sum of any value in interval x and
@@ -50,6 +57,7 @@ def add_interval(x, y):
     lower = lower_bound(x) + lower_bound(y)
     upper = upper_bound(x) + upper_bound(y)
     return interval(lower, upper)
+
 
 def mul_interval(x, y):
     """Return the interval that contains the product of any value in x and any
@@ -64,6 +72,7 @@ def mul_interval(x, y):
     p4 = upper_bound(x) * upper_bound(y)
     return interval(min(p1, p2, p3, p4), max(p1, p2, p3, p4))
 
+
 def div_interval(x, y):
     """Return the interval that contains the quotient of any value in x divided by any value in y.
 
@@ -75,8 +84,10 @@ def div_interval(x, y):
     AssertionError
     """
     "*** YOUR CODE HERE ***"
+    assert min(y) > 0 or max(y) < 0
     reciprocal_y = interval(1/upper_bound(y), 1/lower_bound(y))
     return mul_interval(x, reciprocal_y)
+
 
 def sub_interval(x, y):
     """Return the interval that contains the difference between any value in x
@@ -86,9 +97,13 @@ def sub_interval(x, y):
     '-9 to -2'
     """
     "*** YOUR CODE HERE ***"
+    opposite = interval(-upper_bound(y), -lower_bound(y))
+    return add_interval(x, opposite)
+
 
 def par1(r1, r2):
     return div_interval(mul_interval(r1, r2), add_interval(r1, r2))
+
 
 def par2(r1, r2):
     one = interval(1, 1)
@@ -98,9 +113,24 @@ def par2(r1, r2):
 
 # These two intervals give different results for parallel resistors:
 "*** YOUR CODE HERE ***"
+def par_test():
+    """
+    Used to investiga the behavior of par1 and par2 have different results.
+    """
+    r1 = interval(1, 1)
+    r2 = interval(1, 1)
+    assert par1(r1, r2) == par2(r1, r2)
+    r1 = interval(0.5, 1)
+    r2 = interval(2, 4)
+    print(par1(r1, r2))
+    print(par2(r1, r2))
+    assert par1(r1, r2) == par2(r1, r2), "Different results."
+
 
 def multiple_references_explanation():
-    return """The mulitple reference problem..."""
+    return """In par1 solution, r1 and r2 were used by two different subroutine respectively
+    But in par2 solution, r1 and r2 were used independently"""
+
 
 def quadratic(x, a, b, c):
     """Return the interval that is the range of the quadratic defined by
@@ -112,18 +142,9 @@ def quadratic(x, a, b, c):
     '0 to 10'
     """
     "*** YOUR CODE HERE ***"
-
-def polynomial(x, c):
-    """Return the interval that is the range of the polynomial defined by
-    coefficients c, for domain interval x.
-
-    >>> str_interval(polynomial(interval(0, 2), [-1, 3, -2]))
-    '-3 to 0.125'
-    >>> str_interval(polynomial(interval(1, 3), [1, -3, 2]))
-    '0 to 10'
-    >>> str_interval(polynomial(interval(0.5, 2.25), [10, 24, -6, -8, 3]))
-    '18.0 to 23.0'
-    """
-    "*** YOUR CODE HERE ***"
-
-
+    fn = lambda x: a * x ** 2 + b * x + c
+    ex = -b / (2 * a)
+    left, right, extream = map(fn, (lower_bound(x), upper_bound(x), ex))
+    if lower_bound(x) < ex < upper_bound(x):
+        return interval(min(left, right, extream), max(left, right, extream))
+    return interval(min(left, right), max(left, right))
