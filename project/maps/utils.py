@@ -15,10 +15,9 @@ def map_and_filter(s, map_fn, filter_fn):
     >>> map_and_filter([1, 2, 3, 4, 5], square, is_odd)
     [1, 9, 25]
     """
-    # BEGIN Question 0
     "*** REPLACE THIS LINE ***"
-    return ['REPLACE THIS WITH YOUR LIST COMPREHENSION']
-    # END Question 0
+    return [map_fn(item) for item in s if filter_fn(item)]
+
 
 def key_of_min_value(d):
     """Returns the key in dict d that corresponds to the minimum value of d.
@@ -31,7 +30,7 @@ def key_of_min_value(d):
     """
     # BEGIN Question 0
     "*** REPLACE THIS LINE ***"
-    return min('REPLACE THIS WITH YOUR SOLUTION')
+    return min(d, key=lambda k: d[k])
     # END Question 0
 
 def zip(*sequences):
@@ -53,6 +52,7 @@ def zip(*sequences):
     """
     return list(map(list, _zip(*sequences)))
 
+
 def enumerate(s, start=0):
     """Returns a list of lists, where the i-th list contains i+start and the
     i-th element of s.
@@ -63,7 +63,7 @@ def enumerate(s, start=0):
     [[5, 'f'], [6, 'i'], [7, 'v'], [8, 'e']]
     """
     # BEGIN Question 0
-    "*** REPLACE THIS LINE ***"
+    return zip([idx + start for idx in range(len(s))], s)
     # END Question 0
 
 def distance(pos1, pos2):
