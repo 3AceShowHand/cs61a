@@ -91,3 +91,6 @@ ENV/
 # idea project settings
 .idea
 .vscode
+
+# ok file
+.ok_history
