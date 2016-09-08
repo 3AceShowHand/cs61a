@@ -65,7 +65,6 @@ def make_restaurant(name, location, categories, price, reviews):
     # adding more items to the dictionary below.
     # BEGIN Question 1
     "*** REPLACE THIS LINE ***"
-    # END Question 1
     return {
         'name': name,
         'location': location,
@@ -103,7 +102,7 @@ def restaurant_ratings(restaurant):
 def restaurant_num_ratings(restaurant):
     """Return the number of ratings for restaurant."""
     # BEGIN Question 2
-    "*** REPLACE THIS LINE ***"
+    
     # END Question 2
 
 def restaurant_mean_rating(restaurant):
