@@ -47,15 +47,25 @@ def group_by_centroid(restaurants, centroids):
     restaurants should appear once in the result, along with the other
     restaurants closest to the same centroid.
     """
-    # BEGIN Question 4
-    "*** REPLACE THIS LINE ***"
-    # END Question 4
+    # BEGIN Question
+    # pairs = []
+    # for r in restaurants:
+    #     closest_centroid = find_closest(r['location'], centroids)
+    #     pair = [closest_centroid, r]
+    #     pairs.append(pair)
+    # return group_by_first(pairs)
+    # # END Question 4
+    closest_centroid = [find_closest(r['location'], centroids) for r in restaurants]
+    pairs = zip(closest_centroid, restaurants)
+    return group_by_first(pairs)
 
 
 def find_centroid(cluster):
     """Return the centroid of the locations of the restaurants in cluster."""
     # BEGIN Question 5
-    "*** REPLACE THIS LINE ***"
+    locations = [r['location'] for r in cluster]
+    latitudes, longitudes = zip(*locations)
+    return [mean(latitudes), mean(longitudes)]
     # END Question 5
 
 

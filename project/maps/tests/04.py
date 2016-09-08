@@ -20,7 +20,7 @@ test = {
           """
         },
         {
-          'answer': 'b0b20e80299d918dd96ccea1b84f605c',
+          'answer': '[1, 1]',
           'choices': [
             '[-1, 1]',
             '[1, 1]',
@@ -28,7 +28,7 @@ test = {
             '[1, -1]'
           ],
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'question': r"""
           If centroids is [[1, 1], [1, -1], [-1, 1], [-1, -1]],
           to which centroid will [0, 0] be associated?
