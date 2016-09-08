@@ -6,6 +6,7 @@ from random import sample
 # Rename the built-in zip (http://docs.python.org/3/library/functions.html#zip)
 _zip = zip
 
+
 def map_and_filter(s, map_fn, filter_fn):
     """Return a new list containing the result of calling map_fn on each
     element of sequence s for which filter_fn returns a true value.
@@ -32,6 +33,7 @@ def key_of_min_value(d):
     "*** REPLACE THIS LINE ***"
     return min(d, key=lambda k: d[k])
     # END Question 0
+
 
 def zip(*sequences):
     """Returns a list of lists, where the i-th list contains the i-th
@@ -66,6 +68,7 @@ def enumerate(s, start=0):
     return zip([idx + start for idx in range(len(s))], s)
     # END Question 0
 
+
 def distance(pos1, pos2):
     """Return the Euclidean distance between pos1 and pos2, which are pairs.
 
@@ -73,6 +76,7 @@ def distance(pos1, pos2):
     5.0
     """
     return sqrt((pos1[0] - pos2[0]) ** 2 + (pos1[1] - pos2[1]) ** 2)
+
 
 def mean(s):
     """Return the arithmetic mean of a sequence of numbers s.
