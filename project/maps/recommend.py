@@ -18,9 +18,9 @@ def find_closest(location, centroids):
     >>> find_closest([3.0, 4.0], [[0.0, 0.0], [2.0, 3.0], [4.0, 3.0], [5.0, 5.0]])
     [2.0, 3.0]
     """
-    # BEGIN Question 3
-    "*** REPLACE THIS LINE ***"
-    # END Question 3
+    distances = [distance(location, centroid) for centroid in centroids]
+    closest_idx = distances.index(min(distances))
+    return centroids[closest_idx]
 
 
 def group_by_first(pairs):

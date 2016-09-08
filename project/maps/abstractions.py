@@ -30,7 +30,7 @@ def review_rating(review):
 
 def make_user(name, reviews):
     """Return a user data abstraction."""
-    return [name, {reviewrestaurant_name(r): r for r in reviews}]
+    return [name, {review_restaurant_name(r): r for r in reviews}]
 
 
 def user_name(user):
