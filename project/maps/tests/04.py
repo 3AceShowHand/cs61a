@@ -5,7 +5,7 @@ test = {
     {
       'cases': [
         {
-          'answer': 'bbd938c5f56c98446e918d28e3cce2e7',
+          'answer': '[5, -1]',
           'choices': [
             '[-1, 1]',
             '[5, -1]',
@@ -13,7 +13,7 @@ test = {
             '[-1, -10]'
           ],
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'question': r"""
           If centroids is [[-1, 1], [5, -1], [1, 10], [-1, -10]],
           to which centroid will [6, 0] be associated?
