@@ -55,15 +55,23 @@ def group_by_centroid(restaurants, centroids):
     #     pairs.append(pair)
     # return group_by_first(pairs)
     # # END Question 4
-    closest_centroid = [find_closest(r['location'], centroids) for r in restaurants]
+
+    closest_centroid = [find_closest(restaurant_location(r), centroids) for r in restaurants]
     pairs = zip(closest_centroid, restaurants)
     return group_by_first(pairs)
+
+    # clusters = []
+    # for restaurant in restaurants:
+    #     current_restaurant_location = restaurant_location(restaurant)
+    #     cluster = find_closest(current_restaurant_location, centroids)
+    #     clusters.append([cluster, restaurant])
+    # return group_by_first(clusters)
 
 
 def find_centroid(cluster):
     """Return the centroid of the locations of the restaurants in cluster."""
     # BEGIN Question 5
-    locations = [r['location'] for r in cluster]
+    locations = [restaurant_location(r) for r in cluster]
     latitudes, longitudes = zip(*locations)
     return [mean(latitudes), mean(longitudes)]
     # END Question 5
@@ -78,9 +86,8 @@ def k_means(restaurants, k, max_updates=100):
 
     while old_centroids != centroids and n < max_updates:
         old_centroids = centroids
-        # BEGIN Question 6
-        "*** REPLACE THIS LINE ***"
-        # END Question 6
+        clusters = group_by_centroid(restaurants, old_centroids)
+        centroids = [find_centroid(cluster) for cluster in clusters]
         n += 1
     return centroids
 
@@ -106,10 +113,15 @@ def find_predictor(user, restaurants, feature_fn):
     xs = [feature_fn(r) for r in restaurants]
     ys = [reviews_by_user[restaurant_name(r)] for r in restaurants]
 
-    # BEGIN Question 7
-    "*** REPLACE THIS LINE ***"
-    b, a, r_squared = 0, 0, 0  # REPLACE THIS LINE WITH YOUR SOLUTION
-    # END Question 7
+    mean_x = mean(xs)
+    sxx = sum(list(map(lambda x: (x - mean_x) ** 2, xs)))
+    mean_y = mean(ys)
+    syy = sum(list(map(lambda x: (x - mean_y) ** 2, ys)))
+    sxy = sum(list(map(lambda x, y: (x - mean_x) * (y - mean_y), xs, ys)))
+
+    b = sxy / sxx
+    a = mean_y - b * mean_x
+    r_squared = sxy ** 2 / (sxx * syy)
 
     def predictor(restaurant):
         return b * feature_fn(restaurant) + a
