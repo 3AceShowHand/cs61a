@@ -60,13 +60,6 @@ def group_by_centroid(restaurants, centroids):
     pairs = zip(closest_centroid, restaurants)
     return group_by_first(pairs)
 
-    # clusters = []
-    # for restaurant in restaurants:
-    #     current_restaurant_location = restaurant_location(restaurant)
-    #     cluster = find_closest(current_restaurant_location, centroids)
-    #     clusters.append([cluster, restaurant])
-    # return group_by_first(clusters)
-
 
 def find_centroid(cluster):
     """Return the centroid of the locations of the restaurants in cluster."""
@@ -139,9 +132,18 @@ def best_predictor(user, restaurants, feature_fns):
     feature_fns -- A sequence of functions that each takes a restaurant
     """
     reviewed = user_reviewed_restaurants(user, restaurants)
-    # BEGIN Question 8
-    "*** REPLACE THIS LINE ***"
-    # END Question 8
+
+    # predictors, r_squares = [], []
+    # for fn in feature_fns:
+    #     predictor, r_square = find_predictor(user, restaurants, fn)
+    #     predictors.append(predictor)
+    #     r_squares.append(r_square)
+    # predictor = predictors[r_squares.index(max(r_squares))]
+    # return predictor
+
+    r_squares = [find_predictor(user, reviewed, fn)[1] for fn in feature_fns]
+    predictors = [find_predictor(user, reviewed, fn)[0] for fn in feature_fns]
+    return predictors[r_squares.index(max(r_squares))]
 
 
 def rate_all(user, restaurants, feature_fns):
@@ -155,21 +157,35 @@ def rate_all(user, restaurants, feature_fns):
     """
     predictor = best_predictor(user, ALL_RESTAURANTS, feature_fns)
     reviewed = user_reviewed_restaurants(user, restaurants)
-    # BEGIN Question 9
-    "*** REPLACE THIS LINE ***"
-    # END Question 9
+    # unreviewed_restaurants = list(set(restaurants) ^ set(reviewed_restaurants))
+    # predicted_rating = [[r, predictor(r)] for r in unreviewed_restaurants]
+    # ratings = {}
+    # for r in reviewed_restaurants:
+    #     ratings[restaurant_name(r)] = user_rating(user, restaurant_name(r))
+    # for pair in predicted_rating:
+    #     ratings[restaurant_name(pair[0])] = pair[1]
+    # return ratings
+
+    ratings = {}
+    for r in restaurants:
+        ratings[restaurant_name(r)] = (user_rating(user, restaurant_name(r)) if r in reviewed else predictor(r))
+    return ratings
 
 
 def search(query, restaurants):
     """Return each restaurant in restaurants that has query as a category.
-
     Arguments:
     query -- A string
     restaurants -- A sequence of restaurants
     """
-    # BEGIN Question 10
-    "*** REPLACE THIS LINE ***"
-    # END Question 10
+    # res = []
+    # for r in restaurants:
+    #     cate = restaurant_categories(r)
+    #     for entry in cate:
+    #         if entry in query:
+    #             res.append(r)
+    res = [r for r in restaurants if [entry for entry in restaurant_categories(r) if entry in query]]
+    return res
 
 
 def feature_set():
