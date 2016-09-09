@@ -168,7 +168,7 @@ def rate_all(user, restaurants, feature_fns):
 
     ratings = {}
     for r in restaurants:
-        ratings[restaurant_name(r)] = (user_rating(user, restaurant_name(r)) if r in reviewed else predictor(r))
+        ratings[restaurant_name(r)] = user_rating(user, restaurant_name(r)) if r in reviewed else predictor(r)
     return ratings
 
 
@@ -186,7 +186,6 @@ def search(query, restaurants):
     #             res.append(r)
     res = [r for r in restaurants if [entry for entry in restaurant_categories(r) if entry in query]]
     return res
-
 
 def feature_set():
     """Return a sequence of feature functions."""
