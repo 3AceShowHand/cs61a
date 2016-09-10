@@ -13,23 +13,19 @@ test = {
           ...     return 1 + max([height(b) for b in branches(t)])
           >>> t = tree(1, [tree(2, [tree(3)])])
           >>> height(t)
-          31f02e75f8bef5a0621b68131795447b
-          # locked
+          2
           >>> t = tree(1, [tree(2), tree(3, [tree(5)]), tree(4)])
           >>> height(t)
-          31f02e75f8bef5a0621b68131795447b
-          # locked
+          2
           >>> t = tree(1, [tree(2), tree(3, [tree(5)])])
           >>> height(t)
-          31f02e75f8bef5a0621b68131795447b
-          # locked
+          2
           >>> t = tree(1)
           >>> height(t)
-          58e1f1fb97222d3a4c3904f2aa3cf3fa
-          # locked
+          0
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         },
         {
           'code': r"""
@@ -43,31 +39,28 @@ test = {
           ...     return current_height
           >>> t = tree(1, [tree(2, [tree(3)])])
           >>> height(t)
-          58e1f1fb97222d3a4c3904f2aa3cf3fa
-          35926b8dc788659825b34f78c7f76f91
-          31f02e75f8bef5a0621b68131795447b
-          31f02e75f8bef5a0621b68131795447b
-          # locked
+          0
+          1
+          2
+          2
           >>> t = tree(1, [tree(2), tree(3, [tree(5)]), tree(4)])
           >>> height(t)
-          58e1f1fb97222d3a4c3904f2aa3cf3fa
-          58e1f1fb97222d3a4c3904f2aa3cf3fa
-          35926b8dc788659825b34f78c7f76f91
-          58e1f1fb97222d3a4c3904f2aa3cf3fa
-          31f02e75f8bef5a0621b68131795447b
-          31f02e75f8bef5a0621b68131795447b
-          # locked
+          0
+          0
+          1
+          0
+          2
+          2
           >>> t = tree(1, [tree(2), tree(3, [tree(5)])])
           >>> height(t)
-          58e1f1fb97222d3a4c3904f2aa3cf3fa
-          58e1f1fb97222d3a4c3904f2aa3cf3fa
-          35926b8dc788659825b34f78c7f76f91
-          31f02e75f8bef5a0621b68131795447b
-          31f02e75f8bef5a0621b68131795447b
-          # locked
+          0
+          0
+          1
+          2
+          2
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         }
       ],
       'scored': False,

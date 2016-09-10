@@ -5,7 +5,7 @@ test = {
     {
       'cases': [
         {
-          'answer': 'e7df6bc0dc456d2631ac280dcebe1e2d',
+          'answer': 'tree(1, [tree(2), tree(3, [tree(5)]), tree(4)])',
           'choices': [
             'tree(1, [tree(2), tree(3, [tree(5)]), tree(4)])',
             'tree(1, (tree(2), tree(3, (tree(5))), tree(5)))',
@@ -13,7 +13,7 @@ test = {
             'tree(1, [tree(2), tree(3), tree(4)], tree(5))'
           ],
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'question': r"""
           The tree structure for the following is:
               1
@@ -24,7 +24,7 @@ test = {
           """
         },
         {
-          'answer': 'b87929dc6098331f794e03405a9c6e64',
+          'answer': '1, 6, 5, 4',
           'choices': [
             '1, 6, 5',
             '1, 6, 5, 4',
@@ -32,7 +32,7 @@ test = {
             'None of the above'
           ],
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'question': r"""
           Given the following tree structure, what are all the leaves?
                 7
