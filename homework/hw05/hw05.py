@@ -56,34 +56,45 @@ def mobile(left, right):
     """Construct a mobile from a left side and a right side."""
     return tree(None, [left, right])
 
+
 def sides(m):
     """Select the sides of a mobile."""
     return branches(m)
+
 
 def side(length, mobile_or_weight):
     """Construct a side: a length of rod with a mobile or weight at the end."""
     return tree(length, [mobile_or_weight])
 
+
 def length(s):
     """Select the length of a side."""
     return root(s)
+
 
 def end(s):
     """Select the mobile or weight hanging at the end of a side."""
     return branches(s)[0]
 
+
 def weight(size):
     """Construct a weight of some size."""
     assert size > 0
-    "*** YOUR CODE HERE ***"
+    # weight是一个没有子树的最小树。
+    return tree(size)
+
 
 def size(w):
     """Select the size of a weight."""
-    "*** YOUR CODE HERE ***"
+    # 如果是一个weight值，那么就没有branches，直接返回以其为root的值。
+    return root(w)
+
 
 def is_weight(w):
     """Whether w is a weight, not a mobile."""
-    "*** YOUR CODE HERE ***"
+    # 如果是叶子节点，那么就是一个weight值。
+    return is_leaf(w)
+
 
 def examples():
     t = mobile(side(1, weight(2)),
