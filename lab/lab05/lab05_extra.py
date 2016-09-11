@@ -26,4 +26,13 @@ def info(t, target):
     >>> info(my_account, 'Sandstorm') # Should return None, which doesn't appear in the interpreter
     """
     "*** YOUR CODE HERE ***"
+    if root(t) == target:
+        return [target]
+    elif is_leaf(t):
+        return None
+    for b in branches(t):
+        branch_info = info(b, target)
+        if branch_info is not None:
+            return [root(t)] + branch_info
+
 

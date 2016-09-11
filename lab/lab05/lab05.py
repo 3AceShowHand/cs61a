@@ -18,6 +18,16 @@ def make_pytunes(username):
           sandstorm
     """
     "*** YOUR CODE HERE ***"
+    pytunes = tree(username,
+                [tree('pop',
+                    [tree('justin bieber',
+                        [tree('single',
+                            [tree('what do you mean?')])]),
+                            tree('2015 pop mashup')]),
+                tree('trance',
+                    [tree('darude',
+                        [tree('sandstorm')])])])
+    return pytunes
 
 
 # Q5
@@ -29,6 +39,9 @@ def num_songs(t):
     3
     """
     "*** YOUR CODE HERE ***"
+    if is_leaf(t):
+        return 1
+    return sum(num_songs(branch) for branch in branches(t))
 
 
 # Q6
@@ -53,6 +66,9 @@ def find(t, target):
     False
     """
     "*** YOUR CODE HERE ***"
+    if target in t:
+        return True
+    return any (find(branch, target) for branch in branches(t))
 
 
 # Q7
@@ -74,6 +90,10 @@ def add_song(t, song, category):
 
     """
     "*** YOUR CODE HERE ***"
+    if root(t) == category:
+        return tree(root(t), branches(t) + [tree(song)])
+    all_branches = [add_song(b, song, category) for b in branches(t)]
+    return tree(root(t), all_branches)
 
 
 # Q8
@@ -98,6 +118,11 @@ def delete(t, target):
         wedding dress
     """
     "*** YOUR CODE HERE ***"
+    kept_branches = []
+    for branch in branches(t):
+        if root(branch) != target:
+            kept_branches += [delete(branch, target)]
+    return tree(root(t), kept_branches)
 
 
 # ADT
