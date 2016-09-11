@@ -27,7 +27,7 @@ def info(t, target):
     """
     "*** YOUR CODE HERE ***"
     if root(t) == target:
-        return [target]
+        return [root(t)]
     elif is_leaf(t):
         return None
     for b in branches(t):
