@@ -78,21 +78,24 @@ def end(s):
 
 
 def weight(size):
-    """Construct a weight of some size."""
+    """Construct a weight of some size.
+    weight是一个没有子树的最小树。
+    """
     assert size > 0
-    # weight是一个没有子树的最小树。
     return tree(size)
 
 
 def size(w):
-    """Select the size of a weight."""
-    # 如果是一个weight值，那么就没有branches，直接返回以其为root的值。
+    """Select the size of a weight.
+    如果是一个weight值，那么就没有branches，直接返回以其为root的值。
+    """
     return root(w)
 
 
 def is_weight(w):
-    """Whether w is a weight, not a mobile."""
-    # 如果是叶子节点，那么就是一个weight值。
+    """Whether w is a weight, not a mobile.
+    如果是叶子节点，那么就是一个weight值。
+    """
     return is_leaf(w)
 
 
@@ -121,6 +124,7 @@ def total_weight(m):
         return size(m)
     else:
         return sum([total_weight(end(s)) for s in sides(m)])
+
 
 def with_totals(m):
     """Return a mobile with total weights stored as the root of each mobile.
@@ -182,6 +186,7 @@ def with_totals(m):
                 2
     """
     "*** YOUR CODE HERE ***"
+
 
 def balanced(m):
     """Return whether m is balanced.
