@@ -7,11 +7,14 @@ def tree(root, branches=[]):
         assert is_tree(branch), 'branches must be trees'
     return {'<root>': root, '<branches>': branches}
 
+
 def root(tree):
     return tree['<root>']
 
+
 def branches(tree):
     return tree['<branches>']
+
 
 def is_tree(tree):
     if type(tree) != dict or '<root>' not in tree or '<branches>' not in tree:
@@ -21,10 +24,13 @@ def is_tree(tree):
             return False
     return True
 
+
 def is_leaf(tree):
     return not branches(tree)
 
+
 numbers = tree(1, [tree(2), tree(3, [tree(4), tree(5)]), tree(6, [tree(7)])])
+
 
 def print_tree(t, indent=0):
     """Print a representation of this tree in which each node is
@@ -48,6 +54,7 @@ def print_tree(t, indent=0):
     for branch in branches(t):
         print_tree(branch, indent + 1)
 
+
 ###########
 # Mobiles #
 ###########
@@ -57,14 +64,26 @@ def mobile(left, right):
     return tree(None, [left, right])
 
 
+def side(length, mobile_or_weight):
+    """Construct a side: a length of rod with a mobile or weight at the end."""
+    return tree(length, [mobile_or_weight])
+
+
 def sides(m):
     """Select the sides of a mobile."""
     return branches(m)
 
 
-def side(length, mobile_or_weight):
-    """Construct a side: a length of rod with a mobile or weight at the end."""
-    return tree(length, [mobile_or_weight])
+def left_side(m):
+    return sides(m)[0]
+
+
+def right_side(m):
+    return sides(m)[1]
+
+
+def torque(s):
+    return length(s) * size(end(s))
 
 
 def length(s):
@@ -186,6 +205,9 @@ def with_totals(m):
                 2
     """
     "*** YOUR CODE HERE ***"
+    # 判断当前节点是不是个根节点，如果是那么None，求和。如果不是，则有值在其中，直接返回该值。
+    total = total_weight(m) if root(m) is None else root(m)
+    return tree(total, [side(length(s), with_totals(end(s))) for s in sides(m)])
 
 
 def balanced(m):
@@ -204,7 +226,15 @@ def balanced(m):
     >>> balanced(mobile(side(1, w), side(1, v)))
     False
     """
-    "*** YOUR CODE HERE ***"
+    # def torque(s):
+    #     return length(s) * size(end(s))
+    #
+    # if not is_weight(m):
+    #     left = sides(m)[0]
+    #     right = sides(m)[1]
+    #     return torque(left) == torque(right) and balanced(left) and balanced(right)
+
+
 
 ############
 # Mutation #
@@ -342,9 +372,6 @@ class MissManners:
     """
     "*** YOUR CODE HERE ***"
 
-
 #############
 # Challenge #
 #############
-
-
