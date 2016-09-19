@@ -75,16 +75,18 @@ def sides(m):
 
 
 def left(m):
+    """return the left sub mobile."""
     return end(sides(m)[0])
 
 
 def right(m):
+    """return the right sub mobile."""
     return end(sides(m)[1])
 
 
-def is_balance(m):
-    lside, rside = sides(m)
-    return length(lside) * size(end(lside)) == length(rside) * size(end(rside))
+def torque(s):
+    """return the torque of a side."""
+    return length(s) * size(end(s))
 
 
 def length(s):
@@ -227,10 +229,10 @@ def balanced(m):
     >>> balanced(mobile(side(1, w), side(1, v)))
     False
     """
-
     m = with_totals(m)
     if is_weight(m):
         return True
+    return torque(left(m)) == torque(right(m))
 
 
 
