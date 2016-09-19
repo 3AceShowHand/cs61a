@@ -238,11 +238,6 @@ def balanced(m):
     return balance and balanced(left(m)) and balanced(right(m))
 
 
-# if __name__ == "__main__":
-#     t, u, v = examples()
-#     b = balanced(u)
-#     print(b)
-
 ############
 # Mutation #
 ############
@@ -270,9 +265,21 @@ def make_withdraw(balance, password):
     >>> w(10, 'l33t')
     "Your account is locked. Attempts: ['hwat', 'a', 'n00b']"
     """
-    "*** YOUR CODE HERE ***"
-
-
+    pds = []
+    def with_draw(amount, pd):
+        nonlocal pds
+        nonlocal balance
+        if len(pds) == 3:
+            return "Your account is locked. Attempts: " + str(pds)
+        elif amount <= balance and pd == password:
+            balance -= amount
+            return balance
+        elif pd != password:
+            pds.append(pd)
+            return "Incorrect password"
+        elif amount > balance:
+            return "Insufficient funds"
+    return with_draw
 
 
 def make_joint(withdraw, old_password, new_password):
