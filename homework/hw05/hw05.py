@@ -230,10 +230,12 @@ def balanced(m):
     False
     """
     m = with_totals(m)
+    # 如果是叶子节点，返回真
     if is_weight(m):
         return True
-    return torque(left(m)) == torque(right(m))
-
+    # 如果全平衡，那么当前平衡，且左平衡和右平衡。
+    balance = torque(sides(m)[0]) == torque(sides(m)[1])
+    return balance and balanced(left(m)) and balanced(right(m))
 
 
 # if __name__ == "__main__":
