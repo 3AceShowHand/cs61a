@@ -74,16 +74,17 @@ def sides(m):
     return branches(m)
 
 
-def left_side(m):
-    return sides(m)[0]
+def left(m):
+    return end(sides(m)[0])
 
 
-def right_side(m):
-    return sides(m)[1]
+def right(m):
+    return end(sides(m)[1])
 
 
-def torque(s):
-    return length(s) * size(end(s))
+def is_balance(m):
+    lside, rside = sides(m)
+    return length(lside) * size(end(lside)) == length(rside) * size(end(rside))
 
 
 def length(s):
@@ -226,15 +227,17 @@ def balanced(m):
     >>> balanced(mobile(side(1, w), side(1, v)))
     False
     """
-    # def torque(s):
-    #     return length(s) * size(end(s))
-    #
-    # if not is_weight(m):
-    #     left = sides(m)[0]
-    #     right = sides(m)[1]
-    #     return torque(left) == torque(right) and balanced(left) and balanced(right)
+
+    m = with_totals(m)
+    if is_weight(m):
+        return True
 
 
+
+# if __name__ == "__main__":
+#     t, u, v = examples()
+#     b = balanced(u)
+#     print(b)
 
 ############
 # Mutation #
@@ -264,6 +267,8 @@ def make_withdraw(balance, password):
     "Your account is locked. Attempts: ['hwat', 'a', 'n00b']"
     """
     "*** YOUR CODE HERE ***"
+
+
 
 
 def make_joint(withdraw, old_password, new_password):
