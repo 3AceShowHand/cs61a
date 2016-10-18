@@ -244,7 +244,6 @@ def balanced(m):
 
 def make_withdraw(balance, password):
     """Return a password-protected withdraw function.
-
     >>> w = make_withdraw(100, 'hax0r')
     >>> w(25, 'hax0r')
     75
@@ -266,6 +265,7 @@ def make_withdraw(balance, password):
     "Your account is locked. Attempts: ['hwat', 'a', 'n00b']"
     """
     pds = []
+
     def with_draw(amount, pd):
         nonlocal pds
         nonlocal balance
@@ -279,13 +279,13 @@ def make_withdraw(balance, password):
             return "Incorrect password"
         elif amount > balance:
             return "Insufficient funds"
+
     return with_draw
 
 
 def make_joint(withdraw, old_password, new_password):
     """Return a password-protected withdraw function that has joint access to
     the balance of withdraw.
-
     >>> w = make_withdraw(100, 'hax0r')
     >>> w(25, 'hax0r')
     75
@@ -300,7 +300,6 @@ def make_joint(withdraw, old_password, new_password):
     25
     >>> j(100, 'secret')
     'Insufficient funds'
-
     >>> j2 = make_joint(j, 'secret', 'code')
     >>> j2(5, 'code')
     20
@@ -308,7 +307,6 @@ def make_joint(withdraw, old_password, new_password):
     15
     >>> j2(5, 'hax0r')
     10
-
     >>> j2(25, 'password')
     'Incorrect password'
     >>> j2(5, 'secret')
@@ -320,7 +318,16 @@ def make_joint(withdraw, old_password, new_password):
     >>> make_joint(w, 'hax0r', 'hello')
     "Your account is locked. Attempts: ['my', 'secret', 'password']"
     """
+    draw = withdraw(0, old_password)
+    if type(draw) == str:
+        return draw
 
+    def joint(amount, attempt):
+        if attempt == old_password or attempt == new_password:
+            return withdraw(amount, old_password)
+        return withdraw(amount, attempt)
+
+    return joint
 
 
 ###########
@@ -352,7 +359,25 @@ class VendingMachine:
     >>> v.deposit(15)
     'Machine is out of stock. Here is your $15.'
     """
-    "*** YOUR CODE HERE ***"
+
+    def __init__(self, describe, price):
+        self.describe = describe
+        self.price = price
+        return self
+
+    def restock(self, count):
+        self.counts = count
+        return "Current {0} stock: {1}".format(self.describe, self.counts)
+
+    def deposite(self, current_balance):
+        self.current_balance = current_balance
+        if self.counts == 0:
+            return "Machine is out of stock. Here is your ${0}".format(self.current_balance)
+        return "Current balance: ${0}".format(self.current_balance)
+
+    def vend(self):
+        if self.count == 0:
+            return "Machine is out of stock."
 
 
 class MissManners:
