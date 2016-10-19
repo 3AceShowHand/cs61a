@@ -359,25 +359,37 @@ class VendingMachine:
     >>> v.deposit(15)
     'Machine is out of stock. Here is your $15.'
     """
-
     def __init__(self, describe, price):
         self.describe = describe
         self.price = price
-        return self
+        self.counts = 0
+        self.current_balance = 0
+
+    def vend(self):
+        if self.counts == 0:
+            return "Machine is out of stock."
+        if self.current_balance < self.price:
+            return "You must deposit ${0} more.".format(self.price - self.current_balance)
+        elif self.current_balance == self.price:
+            self.current_balance = 0
+            self.counts -= 1
+            return "Here is your {0}.".format(self.describe)
+        else:
+            change = self.current_balance - self.price
+            self.current_balance = 0
+            self.counts -= 1
+            return "Here is your {0} and ${1} change.".format(self.describe, change)
 
     def restock(self, count):
         self.counts = count
         return "Current {0} stock: {1}".format(self.describe, self.counts)
 
-    def deposite(self, current_balance):
-        self.current_balance = current_balance
+    def deposit(self, current_balance):
+        self.current_balance += current_balance
         if self.counts == 0:
-            return "Machine is out of stock. Here is your ${0}".format(self.current_balance)
+            return "Machine is out of stock. Here is your ${0}.".format(self.current_balance)
         return "Current balance: ${0}".format(self.current_balance)
 
-    def vend(self):
-        if self.count == 0:
-            return "Machine is out of stock."
 
 
 class MissManners:
