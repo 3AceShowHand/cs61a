@@ -431,11 +431,7 @@ class MissManners:
             return "You must learn to say please first."
         operation = commands[1]
         if hasattr(self.machine, operation):
-            if operation == "vend":
-                result = getattr(self.machine, operation)
-            else:
-                result = getattr(self.machine, operation)(*args)
-            return result()
+            return getattr(self.machine, operation)(*args)
         else:
             return "Thanks for asking, but I know not how to {0}.".format(' '.join(commands[1:]))
 
