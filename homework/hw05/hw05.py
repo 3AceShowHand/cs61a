@@ -391,7 +391,6 @@ class VendingMachine:
         return "Current balance: ${0}".format(self.current_balance)
 
 
-
 class MissManners:
     """A container class that only forward messages that say please.
 
