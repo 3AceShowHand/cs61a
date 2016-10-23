@@ -422,7 +422,23 @@ class MissManners:
     >>> really_fussy.ask('please ask', 'please deposit', 10)
     'Current balance: $10'
     """
-    "*** YOUR CODE HERE ***"
+    def __init__(self, machine):
+        self.machine = machine
+
+    def ask(self, command, *args):
+        commands = command.split(' ')
+        if commands[0] != "please":
+            return "You must learn to say please first."
+        operation = commands[1]
+        if hasattr(self.machine, operation):
+            if operation == "vend":
+                result = getattr(self.machine, operation)
+            else:
+                result = getattr(self.machine, operation)(*args)
+            return result()
+        else:
+            return "Thanks for asking, but I know not how to {0}.".format(' '.join(commands[1:]))
+
 
 #############
 # Challenge #
