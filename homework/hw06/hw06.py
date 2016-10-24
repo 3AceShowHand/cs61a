@@ -51,7 +51,6 @@ class Tree:
         return not self.branches
 
 
-
 def every_other(s):
     """Mutates a linked list so that all the odd-indiced elements are removed
     (using 0-based indexing).
@@ -118,6 +117,7 @@ def long_paths(tree, n):
     """
     "*** YOUR CODE HERE ***"
 
+
 def partial_tree(s, n):
     """Return a balanced tree of the first n elements of Link s, along with
     the rest of s.
@@ -151,6 +151,7 @@ def partial_tree(s, n):
         left_size = (n-1)//2
         right_size = n - left_size - 1
         "*** YOUR CODE HERE ***"
+
 
 def sequence_to_tree(s):
     """Return a balanced tree containing the elements of sorted Link s.

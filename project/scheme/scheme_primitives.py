@@ -11,8 +11,10 @@ try:
 except:
     print("warning: could not import the turtle module.", file=sys.stderr)
 
+
 class SchemeError(Exception):
     """Exception indicating an error in a Scheme program."""
+
 
 ########################
 # Primitive Operations #
@@ -22,13 +24,17 @@ class SchemeError(Exception):
 # primitive and used in scheme.create_global_frame.
 PRIMITIVES = []
 
+
 def primitive(*names):
     """An annotation to convert a Python function into a PrimitiveProcedure."""
+
     def add(fn):
         for name in names:
             PRIMITIVES.append((name, fn, names[0]))
         return fn
+
     return add
+
 
 def check_type(val, predicate, k, name):
     """Returns VAL.  Raises a SchemeError if not PREDICATE(VAL)
@@ -38,21 +44,26 @@ def check_type(val, predicate, k, name):
         raise SchemeError(msg.format(k, name, type(val).__name__))
     return val
 
+
 @primitive("boolean?")
 def scheme_booleanp(x):
     return x is True or x is False
+
 
 def scheme_truep(val):
     """All values in Scheme are true except False."""
     return val is not False
 
+
 def scheme_falsep(val):
     """Only False is false in Scheme."""
     return val is False
 
+
 @primitive("not")
 def scheme_not(x):
     return not scheme_truep(x)
+
 
 @primitive("equal?")
 def scheme_equalp(x, y):
@@ -63,6 +74,7 @@ def scheme_equalp(x, y):
     else:
         return type(x) == type(y) and x == y
 
+
 @primitive("eq?")
 def scheme_eqp(x, y):
     if scheme_numberp(x) and scheme_numberp(y):
@@ -70,28 +82,34 @@ def scheme_eqp(x, y):
     else:
         return type(x) == type(y) and x == y
 
+
 @primitive("pair?")
 def scheme_pairp(x):
     return isinstance(x, Pair)
+
 
 # Streams
 @primitive("promise?")
 def scheme_promisep(x):
     return type(x).__name__ == 'Promise'
 
+
 @primitive("force")
 def scheme_force(x):
     check_type(x, scheme_promisep, 0, 'promise')
     return x.evaluate()
+
 
 @primitive("cdr-stream")
 def scheme_cdr_stream(x):
     check_type(x, lambda x: scheme_pairp(x) and scheme_promisep(x.second), 0, 'cdr-stream')
     return scheme_force(x.second)
 
+
 @primitive("null?")
 def scheme_nullp(x):
     return x is nil
+
 
 @primitive("list?")
 def scheme_listp(x):
@@ -102,6 +120,7 @@ def scheme_listp(x):
         x = x.second
     return True
 
+
 @primitive("length")
 def scheme_length(x):
     check_type(x, scheme_listp, 0, 'length')
@@ -109,14 +128,17 @@ def scheme_length(x):
         return 0
     return len(x)
 
+
 @primitive("cons")
 def scheme_cons(x, y):
     return Pair(x, y)
+
 
 @primitive("car")
 def scheme_car(x):
     check_type(x, scheme_pairp, 0, 'car')
     return x.first
+
 
 @primitive("cdr")
 def scheme_cdr(x):
@@ -131,12 +153,13 @@ def scheme_list(*vals):
         result = Pair(e, result)
     return result
 
+
 @primitive("append")
 def scheme_append(*vals):
     if len(vals) == 0:
         return nil
     result = vals[-1]
-    for i in range(len(vals)-2, -1, -1):
+    for i in range(len(vals) - 2, -1, -1):
         v = vals[i]
         if v is not nil:
             check_type(v, scheme_pairp, i, 'append')
@@ -149,21 +172,26 @@ def scheme_append(*vals):
             result = r
     return result
 
+
 @primitive("string?")
 def scheme_stringp(x):
     return isinstance(x, str) and x.startswith('"')
+
 
 @primitive("symbol?")
 def scheme_symbolp(x):
     return isinstance(x, str) and not scheme_stringp(x)
 
+
 @primitive("number?")
 def scheme_numberp(x):
     return isinstance(x, (int, float)) and not scheme_booleanp(x)
 
+
 @primitive("integer?")
 def scheme_integerp(x):
     return scheme_numberp(x) and (isinstance(x, int) or round(x) == x)
+
 
 def _check_nums(*vals):
     """Check that all arguments in VALS are numbers."""
@@ -171,6 +199,7 @@ def _check_nums(*vals):
         if not scheme_numberp(v):
             msg = "operand {0} ({1}) is not a number"
             raise SchemeError(msg.format(i, v))
+
 
 def _arith(fn, init, vals):
     """Perform the fn fneration on the number values of VALS, with INIT as
@@ -183,24 +212,28 @@ def _arith(fn, init, vals):
         s = round(s)
     return s
 
+
 @primitive("+")
 def scheme_add(*vals):
     return _arith(operator.add, 0, vals)
 
+
 @primitive("-")
 def scheme_sub(val0, *vals):
-    _check_nums(val0, *vals) # fixes off-by-one error
+    _check_nums(val0, *vals)  # fixes off-by-one error
     if len(vals) == 0:
         return -val0
     return _arith(operator.sub, val0, vals)
+
 
 @primitive("*")
 def scheme_mul(*vals):
     return _arith(operator.mul, 1, vals)
 
+
 @primitive("/")
 def scheme_div(val0, *vals):
-    _check_nums(val0, *vals) # fixes off-by-one error
+    _check_nums(val0, *vals)  # fixes off-by-one error
     try:
         if len(vals) == 0:
             return 1 / val0
@@ -208,14 +241,17 @@ def scheme_div(val0, *vals):
     except ZeroDivisionError as err:
         raise SchemeError(err)
 
+
 @primitive("expt")
 def scheme_expt(val0, val1):
     _check_nums(val0, val1)
     return pow(val0, val1)
 
+
 @primitive("abs")
 def scheme_abs(val0):
     return abs(val0)
+
 
 @primitive("quotient")
 def scheme_quo(val0, val1):
@@ -225,6 +261,7 @@ def scheme_quo(val0, val1):
     except ZeroDivisionError as err:
         raise SchemeError(err)
 
+
 @primitive("modulo")
 def scheme_modulo(val0, val1):
     _check_nums(val0, val1)
@@ -232,6 +269,7 @@ def scheme_modulo(val0, val1):
         return val0 % val1
     except ZeroDivisionError as err:
         raise SchemeError(err)
+
 
 @primitive("remainder")
 def scheme_remainder(val0, val1):
@@ -244,13 +282,17 @@ def scheme_remainder(val0, val1):
         result -= val1
     return result
 
+
 def number_fn(module, name):
     """A Scheme primitive for the named fn in module, which takes numbers."""
     py_fn = getattr(module, name)
+
     def scheme_fn(*vals):
         _check_nums(*vals)
         return py_fn(*vals)
+
     return scheme_fn
+
 
 # Add number functions in the math module as Scheme primitives
 for _name in ["acos", "acosh", "asin", "asinh", "atan", "atan2", "atanh",
@@ -259,44 +301,54 @@ for _name in ["acos", "acosh", "asin", "asinh", "atan", "atan2", "atanh",
               "tan", "tanh", "trunc"]:
     primitive(_name)(number_fn(math, _name))
 
+
 def _numcomp(op, x, y):
     _check_nums(x, y)
     return op(x, y)
+
 
 @primitive("=")
 def scheme_eq(x, y):
     return _numcomp(operator.eq, x, y)
 
+
 @primitive("<")
 def scheme_lt(x, y):
     return _numcomp(operator.lt, x, y)
+
 
 @primitive(">")
 def scheme_gt(x, y):
     return _numcomp(operator.gt, x, y)
 
+
 @primitive("<=")
 def scheme_le(x, y):
     return _numcomp(operator.le, x, y)
 
+
 @primitive(">=")
 def scheme_ge(x, y):
     return _numcomp(operator.ge, x, y)
+
 
 @primitive("even?")
 def scheme_evenp(x):
     _check_nums(x)
     return x % 2 == 0
 
+
 @primitive("odd?")
 def scheme_oddp(x):
     _check_nums(x)
     return x % 2 == 1
 
+
 @primitive("zero?")
 def scheme_zerop(x):
     _check_nums(x)
     return x == 0
+
 
 ##
 ## Other operations
@@ -315,29 +367,35 @@ def scheme_atomp(x):
     else:
         return False
 
+
 @primitive("display")
 def scheme_display(val):
     if scheme_stringp(val):
         val = eval(val)
     print(str(val), end="")
 
+
 @primitive("print")
 def scheme_print(val):
     print(str(val))
+
 
 @primitive("newline")
 def scheme_newline():
     print()
     sys.stdout.flush()
 
+
 @primitive("error")
 def scheme_error(msg=None):
     msg = "" if msg is None else str(msg)
     raise SchemeError(msg)
 
+
 @primitive("exit")
 def scheme_exit():
     raise EOFError
+
 
 ##
 ## Turtle graphics (non-standard)
@@ -345,8 +403,10 @@ def scheme_exit():
 
 _turtle_screen_on = False
 
+
 def turtle_screen_on():
     return _turtle_screen_on
+
 
 def _tscheme_prep():
     global _turtle_screen_on
@@ -355,12 +415,14 @@ def _tscheme_prep():
         turtle.title("Scheme Turtles")
         turtle.mode('logo')
 
+
 @primitive("forward", "fd")
 def tscheme_forward(n):
     """Move the turtle forward a distance N units on the current heading."""
     _check_nums(n)
     _tscheme_prep()
     turtle.forward(n)
+
 
 @primitive("backward", "back", "bk")
 def tscheme_backward(n):
@@ -370,6 +432,7 @@ def tscheme_backward(n):
     _tscheme_prep()
     turtle.backward(n)
 
+
 @primitive("left", "lt")
 def tscheme_left(n):
     """Rotate the turtle's heading N degrees counterclockwise."""
@@ -377,12 +440,14 @@ def tscheme_left(n):
     _tscheme_prep()
     turtle.left(n)
 
+
 @primitive("right", "rt")
 def tscheme_right(n):
     """Rotate the turtle's heading N degrees clockwise."""
     _check_nums(n)
     _tscheme_prep()
     turtle.right(n)
+
 
 @primitive("circle")
 def tscheme_circle(r, extent=None):
@@ -398,12 +463,14 @@ def tscheme_circle(r, extent=None):
     _tscheme_prep()
     turtle.circle(r, extent and extent)
 
+
 @primitive("setposition", "setpos", "goto")
 def tscheme_setposition(x, y):
     """Set turtle's position to (X,Y), heading unchanged."""
     _check_nums(x, y)
     _tscheme_prep()
     turtle.setposition(x, y)
+
 
 @primitive("setheading", "seth")
 def tscheme_setheading(h):
@@ -412,11 +479,13 @@ def tscheme_setheading(h):
     _tscheme_prep()
     turtle.setheading(h)
 
+
 @primitive("penup", "pu")
 def tscheme_penup():
     """Raise the pen, so that the turtle does not draw."""
     _tscheme_prep()
     turtle.penup()
+
 
 @primitive("pendown", "pd")
 def tscheme_pendown():
@@ -424,11 +493,13 @@ def tscheme_pendown():
     _tscheme_prep()
     turtle.pendown()
 
+
 @primitive("showturtle", "st")
 def tscheme_showturtle():
     """Make turtle visible."""
     _tscheme_prep()
     turtle.showturtle()
+
 
 @primitive("hideturtle", "ht")
 def tscheme_hideturtle():
@@ -436,11 +507,13 @@ def tscheme_hideturtle():
     _tscheme_prep()
     turtle.hideturtle()
 
+
 @primitive("clear")
 def tscheme_clear():
     """Clear the drawing, leaving the turtle unchanged."""
     _tscheme_prep()
     turtle.clear()
+
 
 @primitive("color")
 def tscheme_color(c):
@@ -450,6 +523,7 @@ def tscheme_color(c):
     check_type(c, scheme_stringp, 0, "color")
     turtle.color(eval(c))
 
+
 @primitive("rgb")
 def tscheme_rgb(red, green, blue):
     """Return a color from red, green, and blue values from 0 to 1."""
@@ -457,8 +531,9 @@ def tscheme_rgb(red, green, blue):
     for x in colors:
         if x < 0 or x > 1:
             raise SchemeError("Illegal color intensity in " + str(colors))
-    scaled = tuple(int(x*255) for x in colors)
+    scaled = tuple(int(x * 255) for x in colors)
     return '"#%02x%02x%02x"' % scaled
+
 
 @primitive("begin_fill")
 def tscheme_begin_fill():
@@ -466,17 +541,20 @@ def tscheme_begin_fill():
     _tscheme_prep()
     turtle.begin_fill()
 
+
 @primitive("end_fill")
 def tscheme_end_fill():
     """Fill in shape drawn since last begin_fill."""
     _tscheme_prep()
     turtle.end_fill()
 
+
 @primitive("bgcolor")
 def tscheme_bgcolor(c):
     _tscheme_prep()
     check_type(c, scheme_stringp, 0, "bgcolor")
     turtle.bgcolor(eval(c))
+
 
 @primitive("exitonclick")
 def tscheme_exitonclick():
@@ -487,6 +565,7 @@ def tscheme_exitonclick():
         turtle.exitonclick()
         _turtle_screen_on = False
 
+
 @primitive("speed")
 def tscheme_speed(s):
     """Set the turtle's animation speed as indicated by S (an integer in
@@ -495,6 +574,7 @@ def tscheme_speed(s):
     check_type(s, scheme_integerp, 0, "speed")
     _tscheme_prep()
     turtle.speed(s)
+
 
 @primitive("pixel")
 def tscheme_pixel(x, y, c):
@@ -510,11 +590,14 @@ def tscheme_pixel(x, y, c):
     size = tscheme_pixel.size
     for dx in range(size):
         for dy in range(size):
-            screenx, screeny = x * size + dx, h-(y * size + dy)
+            screenx, screeny = x * size + dx, h - (y * size + dy)
             if 0 < screenx < w and 0 < screeny < h:
                 tscheme_pixel.image.put(color, (screenx, screeny))
 
+
 tscheme_pixel.size = 1
+
+
 @primitive("pixelsize")
 def tscheme_pixelsize(size):
     """Change pixel size."""
@@ -523,10 +606,12 @@ def tscheme_pixelsize(size):
         raise SchemeError("Invalid pixel size: " + str(size))
     tscheme_pixel.size = size
 
+
 @primitive("screen_width")
 def tscheme_screen_width():
     """Screen width in pixels of the current size (default 1)."""
     return turtle.getcanvas().winfo_width() // tscheme_pixel.size
+
 
 @primitive("screen_height")
 def tscheme_screen_height():
