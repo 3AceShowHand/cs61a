@@ -172,6 +172,7 @@ class Player(object):
         """
         "*** YOUR CODE HERE ***"
 
+
 class Character(object):
     def __init__(self, name, message):
         self.name = name
@@ -189,13 +190,16 @@ class Thing(object):
     def use(self, place):
         print("You can't use a {0} here".format(self.name))
 
+
 """ Implement Key here! """
+
 
 class Treasure(Thing):
     def __init__(self, name, description, value, weight):
         Thing.__init__(self, name, description)
         self.value = value
         self.weight = weight
+
 
 class Place(object):
     def __init__(self, name, description, characters, things):
@@ -204,7 +208,7 @@ class Place(object):
         self.characters = {character.name: character for character in characters}
         self.things = {thing.name: thing for thing in things}
         self.locked = False
-        self.exits = {} # {'name': (exit, 'description')}
+        self.exits = {}  # {'name': (exit, 'description')}
 
     def look(self):
         print('You are currently at ' + self.name + '. You take a look around and see:')
@@ -258,4 +262,3 @@ class Place(object):
     def add_exits(self, places):
         for place in places:
             self.exits[place.name] = (place, place.description)
-
