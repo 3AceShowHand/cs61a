@@ -28,7 +28,6 @@ class Car(object):
         self.gas += 30
         print('Your car is full.')
 
-
 class MonsterTruck(Car):
     size = 'Monster'
 
