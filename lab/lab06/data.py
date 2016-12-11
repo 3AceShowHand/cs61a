@@ -2,7 +2,6 @@
 from classes import *
 
 # Characters:
-
 john = Character('John',
                  "I can't believe I lost my wallet again! "
                  "I wish someone could find it for me.")
@@ -92,5 +91,5 @@ fsm.locked = True
 
 # Player:
 # The Player should start at sather_gate.
-me = None
+me = Player('Edison', sather_gate)
 
