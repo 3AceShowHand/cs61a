@@ -5,6 +5,7 @@ class Player(object):
         """Create a player object."""
         self.name = name
         self.place = place
+        self.backpack = []
 
     def look(self):
         self.place.look()
@@ -35,7 +36,10 @@ class Player(object):
         destination_place = self.place.get_neighbor(location)
         if destination_place.locked:
             print(destination_place.name, 'is locked! Go look for a key to unlock it')
-        "*** YOUR CODE HERE ***"
+        else:
+            self.place = destination_place
+        print("You are at {0}".format(self.place.name))
+
 
     def talk_to(self, person):
         """Talk to person if person is at player's current place.
@@ -52,7 +56,11 @@ class Player(object):
         """
         if type(person) != str:
             print('Person has to be a string.')
-        "*** YOUR CODE HERE ***"
+        elif person in self.place.characters:
+            print('{0} says: {1}'.format(person, self.place.characters[person].talk()))
+        else:
+            print('{0} is not here.'.format(person))
+
 
     def take(self, thing):
         """Take a thing if thing is at player's current place
@@ -77,7 +85,13 @@ class Player(object):
         """
         if type(thing) != str:
             print('Thing should be a string.')
-        "*** YOUR CODE HERE ***"
+        elif thing not in self.place.things:
+            print('{0} is not here.'.format(thing))
+        else:
+            self.backpack.append(self.place.things[thing])
+            del self.place.things[thing]
+            print('{0} takes the {1}'.format(self.name, thing))
+
 
     def check_backpack(self):
         """Print each item with its description and return a list of item names.
@@ -145,11 +159,24 @@ class Player(object):
         if type(place) != str:
             print("Place must be a string")
             return
+        if self.place.exits[place][0].locked is False:
+            print("{0} is already unlocked!".format(place))
+            return
         key = None
         for item in self.backpack:
             if type(item) == Key:
                 key = item
-        "*** YOUR CODE HERE ***"
+        # if key is None:
+        #     print("{0} can't be unlocked without a key!".format(place))
+        # else:
+        #     self.place.exits[place][0].locked = False
+        #     print("{0} is now unlocked!".format(place))
+        if not key:
+            print(place, "can't be unlocked without a key!")
+        else:
+            place_to_unlock = self.place.get_neighbor(place)
+            key.use(place_to_unlock)
+
 
     def knapsack(self, max_weight, list_of_treasures):
         """Return the total value of the most valuable combination of treasures
@@ -191,7 +218,16 @@ class Thing(object):
         print("You can't use a {0} here".format(self.name))
 
 
-""" Implement Key here! """
+class Key(Thing):
+    def __init__(self, name, description):
+        Thing.__init__(self, name, description)
+
+    def use(self, place):
+        if place.locked:
+            place.locked = False
+            print("{0} is now unlocked!".format(place.name))
+        else:
+            print("{0} is already unlocked!".format(place.name))
 
 
 class Treasure(Thing):
