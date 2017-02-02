@@ -33,6 +33,65 @@ class Link:
         return 'Link({0}{1})'.format(self.first, rest_str)
 
 
+def extend_link(s, t):
+    """Return a Link with elements of s followed by those of t."""
+    if s is Link.empty:
+        return t
+    else:
+        return Link(s.first, extend_link(s.rest, t))
+
+
+def map_link(f, s):
+    """Apply f to each element of s."""
+    if s is Link.empty:
+        return s
+    else:
+        return Link(f(s.first), map_link(f, s.rest))
+
+
+def filter_Link(f, s):
+    """Return a Link with elements of s for which f returns true."""
+    if s is Link.empty:
+        return s
+    else:
+        filtered = filter_Link(f, s.rest)
+        if f(s.first):
+            return Link(f(s.first), filtered)
+        else:
+            return filtered
+
+
+def join_link(s, separator):
+    """Return a string of all elements in s separated by separator."""
+    if s is Link.empty:
+        return s
+    elif s.rest is Link.empty:
+        return str(s.first)
+    return str(s.first) + separator + join_link(s.rest, separator)
+
+
+def partitions(n, m):
+    """Return a linked list of partitions of n & parts of up to m.
+    Each partition is represented as a linked list.
+    """
+    if n == 0:
+        return Link(Link.empty)
+    elif n < 0 or m == 0:
+        return Link.empty
+    else:
+        using_m = partitions(n-m, m)
+        with_m = map_link(lambda p: Link(m, p), using_m)
+        without_m = partitions(n, m-1)
+        return extend_link(with_m, without_m)
+
+
+def print_partitions(n, m):
+    """Print the partitions of n using parts up to size m."""
+    links = partitions(n, m)
+    lines = map_link(lambda s: join_link(s, " + "), links)
+    map_link(print, lines)
+
+
 class Tree:
     def __init__(self, entry, branches=()):
         self.entry = entry
