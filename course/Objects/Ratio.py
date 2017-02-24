@@ -34,6 +34,7 @@ class Ratio:
             return float(self) + other
         g = gcd(n, d)
         return Ratio(n//g, d //g)
+
     __radd__ = __add__
 
     def __float__(self):

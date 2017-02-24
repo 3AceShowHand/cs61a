@@ -25,6 +25,15 @@ class Link:
     def __len__(self):
         return 1 + len(self.rest)
 
+    def append(self, item):
+        while self.rest is not Link.empty:
+            self = self.rest
+        self.rest = Link(item)
+
+    def removeFirst(self):
+        self = self.rest
+        return self
+
     def __repr__(self):
         if self.rest:
             rest_str = ', ' + repr(self.rest)
@@ -92,24 +101,6 @@ def print_partitions(n, m):
     map_link(print, lines)
 
 
-class Tree:
-    def __init__(self, entry, branches=()):
-        self.entry = entry
-        for branch in branches:
-            assert isinstance(branch, Tree)
-        self.branches = list(branches)
-
-    def __repr__(self):
-        if self.branches:
-            branches_str = ', ' + repr(self.branches)
-        else:
-            branches_str = ''
-        return 'Tree({0}{1})'.format(self.entry, branches_str)
-
-    def is_leaf(self):
-        return not self.branches
-
-
 def every_other(s):
     """Mutates a linked list so that all the odd-indiced elements are removed
     (using 0-based indexing).
@@ -127,12 +118,16 @@ def every_other(s):
     >>> singleton
     Link(4)
     """
-    "*** YOUR CODE HERE ***"
+    if s is Link.empty:
+        return
+    if s.rest is Link.empty:
+        return
+    s.rest = s.rest.rest
+    every_other(s.rest)
 
 
 def mutate_reverse(link):
     """Mutates the Link so that its elements are reversed.
-
     >>> link = Link(1)
     >>> mutate_reverse(link)
     >>> link
@@ -143,7 +138,36 @@ def mutate_reverse(link):
     >>> link
     Link(3, Link(2, Link(1)))
     """
-    "*** YOUR CODE HERE ***"
+#     if link is Link.empty:
+#         return
+#     elif link.rest is Link.empty:
+#         return
+#     first = link.first
+#     link.append(first)
+#     link = link.removeFirst()
+#     mutate_reverse(link.rest)
+#
+#
+# if __name__ == "__main__":
+#     s = Link(1, Link(3, Link(5)))
+#     mutate_reverse(s)
+
+class Tree:
+    def __init__(self, entry, branches=()):
+        self.entry = entry
+        for branch in branches:
+            assert isinstance(branch, Tree)
+        self.branches = list(branches)
+
+    def __repr__(self):
+        if self.branches:
+            branches_str = ', ' + repr(self.branches)
+        else:
+            branches_str = ''
+        return 'Tree({0}{1})'.format(self.entry, branches_str)
+
+    def is_leaf(self):
+        return not self.branches
 
 
 def long_paths(tree, n):
