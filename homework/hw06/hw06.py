@@ -138,19 +138,7 @@ def mutate_reverse(link):
     >>> link
     Link(3, Link(2, Link(1)))
     """
-#     if link is Link.empty:
-#         return
-#     elif link.rest is Link.empty:
-#         return
-#     first = link.first
-#     link.append(first)
-#     link = link.removeFirst()
-#     mutate_reverse(link.rest)
-#
-#
-# if __name__ == "__main__":
-#     s = Link(1, Link(3, Link(5)))
-#     mutate_reverse(s)
+
 
 class Tree:
     def __init__(self, entry, branches=()):

@@ -16,7 +16,13 @@ def insert(link, value, index):
     >>> insert(link, 4, 5)
     IndexError
     """
-    "*** YOUR CODE HERE ***"
+    if index == 0:
+        link.rest = Link(link.first, link.rest)
+        link.first = value
+    elif link.rest is Link.empty:
+        raise IndexError
+    else:
+        insert(link.rest, value, index-1)
 
 
 # Q4
@@ -37,7 +43,7 @@ def same_shape(t1, t2):
     >>> same_shape(t, s)
     False
     """
-    "*** YOUR CODE HERE ***"
+    return len(t1.branches) == len(t2.branches) and all(same_shape(st1, st2) for st1, st2 in zip(t1.branches, t2.branches))
 
 
 # Linked List Class
