@@ -14,7 +14,9 @@ def cumulative_sum(t):
     >>> cumulative_sum(Tree(1))
     Tree(1)
     """
-    "*** YOUR CODE HERE ***"
+    subtrees = [cumulative_sum(st) for st in t.branches]
+    new_entry = sum(st.entry for st in subtrees) + t.entry
+    return Tree(new_entry, subtrees)
 
 
 # Q6
@@ -25,7 +27,9 @@ def list_to_link(lst):
     >>> print_link(link)
     <1 2 3>
     """
-    "*** YOUR CODE HERE ***"
+    if not lst:
+        return Link.empty
+    return Link(lst[0], list_to_link(lst[1:]))
 
 
 # Q7
@@ -38,7 +42,9 @@ def link_to_list(link):
     >>> link_to_list(Link.empty)
     []
     """
-    "*** YOUR CODE HERE ***"
+    if link is Link.empty:
+        return []
+    return [link.first] + link_to_list(link.rest)
 
 
 # Q8
@@ -54,7 +60,11 @@ def reverse(link):
     >>> print_link(link)
     <1 2 3>
     """
-    "*** YOUR CODE HERE ***"
+    new = Link(link.first)
+    while link.rest is not Link.empty:
+        link = link.rest
+        new = Link(link.first, new)
+    return new
 
 
 # Q9
@@ -71,7 +81,13 @@ def deep_map(f, link):
     >>> print_link(deep_map(lambda x: 2 * x, Link(s, Link(Link(Link(5))))))
     <<2 <4 6> 8> <<10>>>
     """
-    "*** YOUR CODE HERE ***"
+    if link is Link.empty:
+        return link
+    elif isinstance(link.first, Link):
+        first = deep_map(f, link.first)
+    else:
+        first = f(link.first)
+    return Link(first, deep_map(f, link.rest))
 
 
 # Q10

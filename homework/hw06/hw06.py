@@ -1,3 +1,60 @@
+# Sets as linked lists with no repeats
+
+def empty(s):
+    return s is Link.empty
+
+
+def set_contains(s, v):
+    if empty(s):
+        return False
+    elif v == s.first:
+        return True
+    return set_contains(s.rest, v)
+
+
+def adjoin_set(s, v):
+    if set_contains(s, v):
+        return s
+    return Link(s, v)
+
+
+def interset_set(set1, set2):
+    in_set2 = lambda v: set_contains(set2, v)
+    return keep_if(set1, in_set2)
+
+
+def interset_orderedSet(set1, set2):
+    if empty(set1) or empty(set2):
+        return Link.empty
+    elif set1.first == set2.first:
+        return Link(set1.first, interset_orderedSet(set1.rest, set2.rest))
+    elif set1.first < set2.first:
+        return interset_orderedSet(set1.rest, set2)
+    elif set1.first > set2.first:
+        return interset_orderedSet(set1, set2.rest)
+
+
+def union_set(set1, set2):
+    not_in_set2 = lambda v: not set_contains(set2, v)
+    set1_not_set2 = keep_if(set1, not_in_set2)
+    return extend(set1_not_set2, set2)
+
+
+def extend(s, t):
+    if s is Link.empty:
+        return t
+    return Link(s.first, extend(s.rest, t))
+
+
+def keep_if(s, filter_fn):
+    if s is Link.empty:
+        return s
+    kept = keep_if(s.rest, filter_fn)
+    if filter_fn(s.first):
+        return Link(s.first, kept)
+    return kept
+
+
 class Link:
     """A linked list.
 
