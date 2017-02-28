@@ -7,20 +7,18 @@ test = {
         {
           'code': r"""
           >>> HarvesterAnt.food_cost
-          20d533d3e06345c8bd7072212867f2d1
-          # locked
+          2
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         },
         {
           'code': r"""
           >>> ThrowerAnt.food_cost
-          81a7d27d1a4a958871bb97b545b871db
-          # locked
+          3
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         }
       ],
       'scored': True,

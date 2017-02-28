@@ -25,9 +25,8 @@ class Place(object):
         self.ant = None       # An Ant
         self.entrance = None  # A Place
         # Phase 1: Add an entrance to the exit
-        # BEGIN Problem 2
-        "*** REPLACE THIS LINE ***"
-        # END Problem 2
+        self.exit = self.entrance
+
 
     def add_insect(self, insect):
         """Add an Insect to this Place.
@@ -169,15 +168,17 @@ class HarvesterAnt(Ant):
 
     name = 'Harvester'
     implemented = True
+    food_cost = 2
+
+    def __init__(self, armor=1):
+        Ant.__ini__(self, armor=1)
+
 
     def action(self, colony):
         """Produce 1 additional food for the colony.
-
         colony -- The AntColony, used to access game state information.
         """
-        # BEGIN Problem 1
-        "*** REPLACE THIS LINE ***"
-        # END Problem 1
+        colony.food += 1
 
 
 class ThrowerAnt(Ant):
@@ -186,6 +187,11 @@ class ThrowerAnt(Ant):
     name = 'Thrower'
     implemented = True
     damage = 1
+    food_cost = 3
+
+    def __init__(self, armor=1):
+        Ant.__init__(self, armor=1)
+
 
     def nearest_bee(self, hive):
         """Return the nearest Bee in a Place that is not the Hive, connected to
