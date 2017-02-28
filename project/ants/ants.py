@@ -10,6 +10,7 @@ from collections import OrderedDict
 # Core Classes #
 ################
 
+
 class Place(object):
     """A Place holds insects and has an exit to another Place."""
 
@@ -19,13 +20,14 @@ class Place(object):
         name -- A string; the name of this Place.
         exit -- The Place reached by exiting this Place (may be None).
         """
+        self.entrance = None
         self.name = name
         self.exit = exit
         self.bees = []        # A list of Bees
         self.ant = None       # An Ant
-        self.entrance = None  # A Place
         # Phase 1: Add an entrance to the exit
-        self.exit = self.entrance
+        if self.exit:
+            self.exit.entrance = self
 
 
     def add_insect(self, insect):
