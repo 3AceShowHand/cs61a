@@ -10,14 +10,12 @@ test = {
           >>> # Testing FireAnt parameters
           >>> fire = FireAnt()
           >>> FireAnt.food_cost
-          62674984f877ec783f37e8b8b9c264d0
-          # locked
+          5
           >>> fire.armor
-          d89cf7c79d5a479b0f636734143ed5e6
-          # locked
+          1
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         },
         {
           'code': r"""
@@ -28,11 +26,10 @@ test = {
           >>> place.add_insect(FireAnt())
           >>> bee.action(colony) # attack the FireAnt
           >>> bee.armor
-          20d533d3e06345c8bd7072212867f2d1
-          # locked
+          2
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         },
         {
           'code': r"""

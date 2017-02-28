@@ -16,7 +16,6 @@ class Place(object):
 
     def __init__(self, name, exit=None):
         """Create a Place with the given exit.
-
         name -- A string; the name of this Place.
         exit -- The Place reached by exiting this Place (may be None).
         """
@@ -246,13 +245,15 @@ class FireAnt(Ant):
     damage = 3
     # BEGIN Problem 4A
     "*** REPLACE THIS LINE ***"
-    implemented = False   # Change to True to view in the GUI
-    # END Problem 4A
+    implemented = True   # Change to True to view in the GUI
+    food_cost = 5
+
 
     def reduce_armor(self, amount):
-        # BEGIN Problem 4A
-        "*** REPLACE THIS LINE ***"
-        # END Problem 4A
+        bees = self.place.bees.copy()
+        Ant.reduce_armor(self, amount)
+        for bee in bees:
+            bee.reduce_armor(self.damage)
 
 
 class LongThrower(ThrowerAnt):
