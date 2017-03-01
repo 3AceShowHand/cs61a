@@ -9,22 +9,18 @@ test = {
           'code': r"""
           >>> # Testing Long/ShortThrower parameters
           >>> ShortThrower.food_cost
-          20d533d3e06345c8bd7072212867f2d1
-          # locked
+          2
           >>> LongThrower.food_cost
-          20d533d3e06345c8bd7072212867f2d1
-          # locked
+          2
           >>> short_t = ShortThrower()
           >>> long_t = LongThrower()
           >>> short_t.armor
-          d89cf7c79d5a479b0f636734143ed5e6
-          # locked
+          1
           >>> long_t.armor
-          d89cf7c79d5a479b0f636734143ed5e6
-          # locked
+          1
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         },
         {
           'code': r"""
@@ -35,11 +31,10 @@ test = {
           >>> colony.places["tunnel_0_5"].add_insect(in_range)
           >>> ant.action(colony)
           >>> in_range.armor
-          d89cf7c79d5a479b0f636734143ed5e6
-          # locked
+          1
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         },
         {
           'code': r"""
@@ -50,11 +45,10 @@ test = {
           >>> colony.places["tunnel_0_3"].add_insect(in_range)
           >>> ant.action(colony)
           >>> in_range.armor
-          d89cf7c79d5a479b0f636734143ed5e6
-          # locked
+          1
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         },
         {
           'code': r"""
@@ -65,11 +59,10 @@ test = {
           >>> colony.places["tunnel_0_4"].add_insect(out_of_range)
           >>> ant.action(colony)
           >>> out_of_range.armor
-          20d533d3e06345c8bd7072212867f2d1
-          # locked
+          2
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         }
       ],
       'scored': True,

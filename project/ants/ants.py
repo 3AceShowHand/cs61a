@@ -203,9 +203,15 @@ class ThrowerAnt(Ant):
         This method returns None if there is no such Bee (or none in range).
         """
         # BEGIN Problem 3B
-        "*** REPLACE THIS LINE ***"
-        return random_or_none(self.place.bees)
+        place = self.place
+        while place is not hive:
+            if place.bees:
+                return random_or_none(place.bees)
+            place = place.entrance
+        # return place.bees
+        return None
         # END Problem 3B
+
 
     def throw_at(self, target):
         """Throw a leaf at the target Bee, reducing its armor."""
@@ -260,21 +266,59 @@ class LongThrower(ThrowerAnt):
     """A ThrowerAnt that only throws leaves at Bees at least 5 places away."""
 
     name = 'Long'
-    # BEGIN Problem 4B
-    "*** REPLACE THIS LINE ***"
-    implemented = False   # Change to True to view in the GUI
-    # END Problem 4B
+    implemented = True   # Change to True to view in the GUI
+    food_cost = 2
+    min_range = 5
+    
+    def __init__(self, armor=1):
+        ThrowerAnt.__init__(self, armor)
 
+    def nearest_bee(self, hive):
+        idx = 0
+        place = self.place
+        while idx < 5:
+            place = place.entrance
+            idx += 1
+        while place is not hive:
+            if place.bees:
+                return random_or_none(place.bees)
+            place = place.entrance
+        # return place.bees
+        return None
 
 class ShortThrower(ThrowerAnt):
     """A ThrowerAnt that only throws leaves at Bees at most 3 places away."""
 
     name = 'Short'
-    # BEGIN Problem 4B
-    "*** REPLACE THIS LINE ***"
-    implemented = False   # Change to True to view in the GUI
-    # END Problem 4B
+    implemented = True
+    food_cost = 2
+    max_range = 3
 
+    def __init__(self, armor=1):
+        ThrowerAnt.__init__(self, armor)
+
+    def nearest_bee(self, hive):
+        idx = 0
+        place = self.place
+        while place is not hive and idx <= 3:
+            if place.bees:
+                return random_or_none(place.bees)
+            place = place.entrance
+            idx += 1
+        return None
+
+if __name__ == "__main__":
+    from ants import *
+    hive, layout = Hive(AssaultPlan()), dry_layout
+    dimensions = (1, 9)
+    colony = AntColony(None, hive, ant_types(), layout, dimensions)
+    # Testing ShortThrower miss
+    ant = ShortThrower()
+    out_of_range = Bee(2)
+    colony.places["tunnel_0_0"].add_insect(ant)
+    colony.places["tunnel_0_4"].add_insect(out_of_range)
+    ant.action(colony)
+    out_of_range.armor
 
 # BEGIN Problem 5A
 "*** REPLACE THIS LINE ***"
