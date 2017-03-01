@@ -307,18 +307,6 @@ class ShortThrower(ThrowerAnt):
             idx += 1
         return None
 
-if __name__ == "__main__":
-    from ants import *
-    hive, layout = Hive(AssaultPlan()), dry_layout
-    dimensions = (1, 9)
-    colony = AntColony(None, hive, ant_types(), layout, dimensions)
-    # Testing ShortThrower miss
-    ant = ShortThrower()
-    out_of_range = Bee(2)
-    colony.places["tunnel_0_0"].add_insect(ant)
-    colony.places["tunnel_0_4"].add_insect(out_of_range)
-    ant.action(colony)
-    out_of_range.armor
 
 # BEGIN Problem 5A
 "*** REPLACE THIS LINE ***"
