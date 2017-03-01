@@ -288,6 +288,7 @@ class LongThrower(ThrowerAnt):
         # return place.bees
         return None
 
+
 class ShortThrower(ThrowerAnt):
     """A ThrowerAnt that only throws leaves at Bees at most 3 places away."""
 
@@ -352,24 +353,25 @@ class HungryAnt(Ant):
     """
     name = 'Hungry'
     # BEGIN Problem 6B
-    "*** REPLACE THIS LINE ***"
-    implemented = False   # Change to True to view in the GUI
-    # END Problem 6B
+    time_to_digest = 3
+    implemented = True   # Change to True to view in the GUI
+    food_cost = 4
 
-    def __init__(self):
+    def __init__(self, armor=1):
         # BEGIN Problem 6B
-        "*** REPLACE THIS LINE ***"
+        Ant.__init__(self, armor)
+        self.digesting = 0
         # END Problem 6B
 
     def eat_bee(self, bee):
-        # BEGIN Problem 6B
-        "*** REPLACE THIS LINE ***"
-        # END Problem 6B
+        if self.digesting == 0:
+            bee.reduce_armor(bee.armor)
+            self.digesting = HungryAnt.time_to_digest
+        else:
+            self.digesting -= 1
 
     def action(self, colony):
-        # BEGIN Problem 6B
-        "*** REPLACE THIS LINE ***"
-        # END Problem 6B
+        self.eat_bee(random_or_none(colony.bees))
 
 
 class BodyguardAnt(Ant):
@@ -377,7 +379,7 @@ class BodyguardAnt(Ant):
     name = 'Bodyguard'
     # BEGIN Problem 7
     "*** REPLACE THIS LINE ***"
-    implemented = False   # Change to True to view in the GUI
+    implemented = False  # Change to True to view in the GUI
     # END Problem 7
 
     def __init__(self):
