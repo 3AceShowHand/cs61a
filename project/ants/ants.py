@@ -308,10 +308,13 @@ class ShortThrower(ThrowerAnt):
         return None
 
 
-# BEGIN Problem 5A
-"*** REPLACE THIS LINE ***"
-# The WallAnt class
-# END Problem 5A
+class WallAnt(Ant):
+    food_cost = 4
+    name = "Wall"
+    implemented = True
+
+    def __init__(self, armor=4):
+        Ant.__init__(self, armor)
 
 
 class NinjaAnt(Ant):
