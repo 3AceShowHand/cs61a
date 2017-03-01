@@ -336,10 +336,14 @@ class NinjaAnt(Ant):
             bee.reduce_armor(NinjaAnt.damage)
 
 
-# BEGIN Problem 5B
-"*** REPLACE THIS LINE ***"
-# The ScubaThrower class
-# END Problem 5B
+class ScubaThrower(ThrowerAnt):
+    name = "Scuba"
+    watersafe = True
+    implemented = True
+    food_cost = 6
+
+    def __init__(self, armor=1):
+        ThrowerAnt.__init__(self, armor)
 
 
 class HungryAnt(Ant):
