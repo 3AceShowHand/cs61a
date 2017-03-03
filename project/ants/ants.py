@@ -407,8 +407,9 @@ class BodyguardAnt(Ant):
     def action(self, colony):
         # BEGIN Problem 7
         bees = colony.bees.copy()
-        for bee in bees:
-            bee.reduce_armor(self.ant.damage)
+        if self.ant:
+            for bee in bees:
+                bee.reduce_armor(self.ant.damage)
         # END Problem 7
 
 
@@ -417,14 +418,40 @@ class TankAnt(BodyguardAnt):
     name = 'Tank'
     damage = 1
     # BEGIN Problem 8
-    "*** REPLACE THIS LINE ***"
-    implemented = False   # Change to True to view in the GUI
+    food_cost = 6
+    implemented = True   # Change to True to view in the GUI
     # END Problem 8
 
     def action(self, colony):
-        # BEGIN Problem 8
-        "*** REPLACE THIS LINE ***"
-        # END Problem 8
+        bees = colony.bees.copy()
+        for bee in bees:
+            bee.reduce_armor(self.damage)
+            if self.ant and self.ant.damage:
+                self.ant.action(colony)
+        # self.ant is harvester ant.
+        if self.ant:
+            self.ant.action(colony)
+
+
+if __name__ == "__main__":
+    from ants import *
+    hive, layout = Hive(make_test_assault_plan()), dry_layout
+    dimensions = (1, 9)
+    colony = AntColony(None, hive, ant_types(), layout, dimensions)
+    # Placement of ants
+    tank0 = TankAnt()
+    tank1 = TankAnt()
+    harvester0 = HarvesterAnt()
+    harvester1 = HarvesterAnt()
+    place0 = colony.places['tunnel_0_0']
+    place1 = colony.places['tunnel_0_1']
+    # Add tank before harvester
+    place0.add_insect(tank0)
+    place0.add_insect(harvester0)
+    colony.food = 0
+    tank0.action(colony)
+    colony.food
+
 
 class QueenAnt(Ant):  # You should change this line
     """The Queen of the colony.  The game is over if a bee enters her place."""
