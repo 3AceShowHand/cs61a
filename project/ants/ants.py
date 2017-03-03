@@ -57,22 +57,6 @@ class Place(object):
         insect.place = self
 
 
-if __name__ == "__main__":
-    from ants import *
-    hive, layout = Hive(AssaultPlan()), dry_layout
-    dimensions = (1, 9)
-    colony = AntColony(None, hive, ant_types(), layout, dimensions)
-    # Testing bodyguard performs thrower's action
-    bodyguard = BodyguardAnt()
-    thrower = ThrowerAnt()
-    bee = Bee(2)
-    # Place bodyguard before thrower
-    colony.places["tunnel_0_0"].add_insect(bodyguard)
-    colony.places["tunnel_0_0"].add_insect(thrower)
-    colony.places["tunnel_0_3"].add_insect(bee)
-    bodyguard.action(colony)
-
-
     def remove_insect(self, insect):
         """Remove an Insect from this Place.
 
