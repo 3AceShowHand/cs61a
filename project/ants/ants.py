@@ -44,12 +44,34 @@ class Place(object):
             else:
                 # Phase 4: Special handling for BodyguardAnt
                 # BEGIN Problem 7
-                "*** REPLACE THIS LINE ***"
-                assert self.ant is None, 'Two ants in {0}'.format(self)
+                if self.ant.can_contain(insect):
+                    self.ant.ant = insect
+                elif insect.can_contain(self.ant):
+                    insect.ant = self.ant
+                    self.ant = insect
+                else:
+                    assert self.ant is None, 'Two ants in {0}'.format(self)
                 # END Problem 7
         else:
             self.bees.append(insect)
         insect.place = self
+
+
+if __name__ == "__main__":
+    from ants import *
+    hive, layout = Hive(AssaultPlan()), dry_layout
+    dimensions = (1, 9)
+    colony = AntColony(None, hive, ant_types(), layout, dimensions)
+    # Testing bodyguard performs thrower's action
+    bodyguard = BodyguardAnt()
+    thrower = ThrowerAnt()
+    bee = Bee(2)
+    # Place bodyguard before thrower
+    colony.places["tunnel_0_0"].add_insect(bodyguard)
+    colony.places["tunnel_0_0"].add_insect(thrower)
+    colony.places["tunnel_0_3"].add_insect(bee)
+    bodyguard.action(colony)
+
 
     def remove_insect(self, insect):
         """Remove an Insect from this Place.
@@ -162,10 +184,16 @@ class Ant(Insect):
     implemented = False  # Only implemented Ant classes should be instantiated
     food_cost = 0
     blocks_path = True
+    container = False
 
     def __init__(self, armor=1):
         """Create an Ant with an armor quantity."""
         Insect.__init__(self, armor)
+
+    def can_contain(self, other):
+        if self.container and not self.ant and not other.container:
+            return True
+        return False
 
 
 class HarvesterAnt(Ant):
@@ -378,8 +406,9 @@ class BodyguardAnt(Ant):
     """BodyguardAnt provides protection to other Ants."""
     name = 'Bodyguard'
     # BEGIN Problem 7
-    "*** REPLACE THIS LINE ***"
-    implemented = False  # Change to True to view in the GUI
+    food_cost = 4
+    implemented = True  # Change to True to view in the GUI
+    container = True
     # END Problem 7
 
     def __init__(self):
@@ -388,13 +417,16 @@ class BodyguardAnt(Ant):
 
     def contain_ant(self, ant):
         # BEGIN Problem 7
-        "*** REPLACE THIS LINE ***"
+        self.ant = ant
         # END Problem 7
 
     def action(self, colony):
         # BEGIN Problem 7
-        "*** REPLACE THIS LINE ***"
+        bees = colony.bees.copy()
+        for bee in bees:
+            bee.reduce_armor(self.ant.damage)
         # END Problem 7
+
 
 class TankAnt(BodyguardAnt):
     """TankAnt provides both offensive and defensive capabilities."""

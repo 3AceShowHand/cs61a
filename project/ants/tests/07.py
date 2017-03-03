@@ -9,32 +9,27 @@ test = {
           >>> # Testing BodyguardAnt parameters
           >>> bodyguard = BodyguardAnt()
           >>> BodyguardAnt.food_cost
-          c9452203eb0b0f0bd2454586a6c2fc5c
-          # locked
+          4
           >>> bodyguard.armor
-          20d533d3e06345c8bd7072212867f2d1
-          # locked
+          2
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         },
         {
           'code': r"""
           >>> # Testing container attributes
           >>> bodyguard = BodyguardAnt()
           >>> print(bodyguard.ant)
-          044ef3c0c6fd739b6260fe6f6cae71dd
-          # locked
+          None
           >>> bodyguard.container
-          c7a88a0ffd3aef026b98eef6e7557da3
-          # locked
+          True
           >>> test_ant = Ant()
           >>> test_ant.container
-          03456a09f22295a39ca84d133a26f63d
-          # locked
+          False
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         },
         {
           'code': r"""
@@ -44,24 +39,19 @@ test = {
           >>> test_ant = Ant()
           >>> test_ant2 = Ant()
           >>> bodyguard.can_contain(bodyguard2)
-          03456a09f22295a39ca84d133a26f63d
-          # locked
+          False
           >>> bodyguard.can_contain(test_ant)
-          c7a88a0ffd3aef026b98eef6e7557da3
-          # locked
+          True
           >>> test_ant.can_contain(bodyguard)
-          03456a09f22295a39ca84d133a26f63d
-          # locked
+          False
           >>> bodyguard.contain_ant(test_ant)
           >>> bodyguard.ant is test_ant
-          c7a88a0ffd3aef026b98eef6e7557da3
-          # locked
+          True
           >>> bodyguard.can_contain(test_ant2)
-          03456a09f22295a39ca84d133a26f63d
-          # locked
+          False
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         }
       ],
       'scored': True,
