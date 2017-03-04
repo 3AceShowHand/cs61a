@@ -28,7 +28,23 @@ def make_advanced_counter_maker():
     >>> tom_counter('global-count')
     1
     """
-    "*** YOUR CODE HERE ***"
+    global_count = 0
+    def make_counter():
+        count = 0
+        def counter(msg):
+            nonlocal global_count, count
+            if msg == "count":
+                count += 1
+                return count
+            elif msg == "reset":
+                count = 0
+            elif msg == "global-count":
+                global_count += 1
+                return global_count
+            elif msg == "global-reset":
+                global_count = 0
+        return counter
+    return make_counter
 
 
 # Q4
@@ -60,7 +76,16 @@ def intersection(xs, ys):
     >>> intersection(a, c).first # intersection begins at a
     5
     """
-    "*** YOUR CODE HERE ***"
+    if xs is Link.empty or ys is Link.empty:
+        return Link.empty
+    if len(xs) < len(ys):
+        return intersection(xs, ys.rest)
+    elif len(xs) > len(ys):
+        return intersection(xs.rest, ys)
+
+    while xs is not ys:
+        xs, ys = xs.rest, ys.rest
+    return xs
 
 
 # Q5
@@ -95,7 +120,13 @@ def trade(first, second):
 
     "*** YOUR CODE HERE ***"
 
-    if False: # change this line!
+    equal_prefix = lambda: sum(first[:m]) == sum(second[:n])
+    while m < len(first) and n < len(second) and not equal_prefix():
+        if sum(first[:m]) < sum(second[:n]):
+            m += 1
+        else:
+            n += 1
+    if equal_prefix():
         first[:m], second[:n] = second[:n], first[:m]
         return 'Deal!'
     else:
