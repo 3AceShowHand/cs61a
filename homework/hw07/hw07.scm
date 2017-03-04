@@ -2,27 +2,31 @@
   (cdr (cdr s)))
 
 (define (cadr s)
-  'YOUR-CODE-HERE
-  nil
-)
+  (car (cdr s)) 
+ )
 
 (define (caddr s)
-  'YOUR-CODE-HERE
-  nil
+  (car (cddr s))
 )
 
 
 (define (sign x)
-  'YOUR-CODE-HERE
-  nil
-)
+  (cond
+      ((< 0 x) 1)
+      ((> 0 x) -1)
+      (else 0)
+))
 
 
 (define (square x) (* x x))
 
 (define (pow b n)
-  'YOUR-CODE-HERE
-  nil
+  (cond 
+      ((= 1 n) b)
+      ((= 2 n) (square b))
+      ((even? n) square(pow b (/ n 2)))
+      (else (* b (square(pow b (/ (- n 1) 2)))))
+  )
 )
 
 
