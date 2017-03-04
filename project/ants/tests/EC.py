@@ -10,20 +10,16 @@ test = {
           >>> slow = SlowThrower()
           >>> stun = StunThrower()
           >>> SlowThrower.food_cost
-          c9452203eb0b0f0bd2454586a6c2fc5c
-          # locked
+          4
           >>> StunThrower.food_cost
-          50ae32be3e31df6c59633df7fdfb3a72
-          # locked
+          6
           >>> slow.armor
-          d89cf7c79d5a479b0f636734143ed5e6
-          # locked
+          1
           >>> stun.armor
-          d89cf7c79d5a479b0f636734143ed5e6
-          # locked
+          1
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         },
         {
           'code': r"""

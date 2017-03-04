@@ -496,6 +496,22 @@ class AntRemover(Ant):
         Ant.__init__(self, 0)
 
 
+if __name__ == "__main__":
+    from ants import *
+    hive, layout = Hive(AssaultPlan()), dry_layout
+    dimensions = (1, 9)
+    colony = AntColony(None, hive, ant_types(), layout, dimensions)
+    # Testing Slow
+    slow = SlowThrower()
+    bee = Bee(3)
+    colony.places["tunnel_0_0"].add_insect(slow)
+    colony.places["tunnel_0_4"].add_insect(bee)
+    slow.action(colony)
+    colony.time = 1
+    bee.action(colony)
+    bee.place.name  # SlowThrower should cause slowness on odd turns
+
+
 ##################
 # Status Effects #
 ##################
@@ -506,7 +522,15 @@ def make_slow(action):
     action -- An action method of some Bee
     """
     # BEGIN Problem EC
-    "*** REPLACE THIS LINE ***"
+    def slow_move(colony):
+        if slow_move.duration == 0:
+            return action(colony)
+
+        slow_move.duration -= 1
+        if colony.time % 2 == 0:
+            return action(colony)
+
+    return slow_move
     # END Problem EC
 
 def make_stun(action):
@@ -515,13 +539,20 @@ def make_stun(action):
     action -- An action method of some Bee
     """
     # BEGIN Problem EC
-    "*** REPLACE THIS LINE ***"
+    def stun_move(colony):
+        if stun_move.duration == 0:
+            return action(colony)
+
+        stun_move.duration -= 1
+
+    return stun_move
     # END Problem EC
 
 def apply_effect(effect, bee, duration):
     """Apply a status effect to a Bee that lasts for duration turns."""
     # BEGIN Problem EC
-    "*** REPLACE THIS LINE ***"
+    bee.action = effect(bee.action)
+    bee.action.duration = duration
     # END Problem EC
 
 
@@ -530,9 +561,13 @@ class SlowThrower(ThrowerAnt):
 
     name = 'Slow'
     # BEGIN Problem EC
-    "*** REPLACE THIS LINE ***"
-    implemented = False   # Change to True to view in the GUI
+    food_cost = 4
+    implemented = True   # Change to True to view in the GUI
     # END Problem EC
+
+    def __init__(self, armor=1):
+        ThrowerAnt.__init__(self, armor)
+
 
     def throw_at(self, target):
         if target:
@@ -544,9 +579,13 @@ class StunThrower(ThrowerAnt):
 
     name = 'Stun'
     # BEGIN Problem EC
-    "*** REPLACE THIS LINE ***"
-    implemented = False   # Change to True to view in the GUI
+    food_cost = 6
+    implemented = True   # Change to True to view in the GUI
     # END Problem EC
+
+    def __init__(self, armor=1):
+        ThrowerAnt.__init__(self, armor)
+
 
     def throw_at(self, target):
         if target:
