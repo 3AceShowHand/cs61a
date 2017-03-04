@@ -522,15 +522,14 @@ def make_slow(action):
     action -- An action method of some Bee
     """
     # BEGIN Problem EC
-    def slow_move(colony):
-        if slow_move.duration == 0:
+    # copy solution from other file.
+    def slow(colony):
+        if slow.duration == 0:
             return action(colony)
-
-        slow_move.duration -= 1
+        slow.duration -= 1
         if colony.time % 2 == 0:
             return action(colony)
-
-    return slow_move
+    return slow
     # END Problem EC
 
 def make_stun(action):
@@ -539,20 +538,20 @@ def make_stun(action):
     action -- An action method of some Bee
     """
     # BEGIN Problem EC
-    def stun_move(colony):
-        if stun_move.duration == 0:
+    # copy solution from other file.
+    def stun(colony):
+        if stun.duration == 0:
             return action(colony)
-
-        stun_move.duration -= 1
-
-    return stun_move
+        stun.duration -= 1
+    return stun
     # END Problem EC
 
 def apply_effect(effect, bee, duration):
     """Apply a status effect to a Bee that lasts for duration turns."""
     # BEGIN Problem EC
-    bee.action = effect(bee.action)
+    # copy solution from other file.
     bee.action.duration = duration
+    bee.action = effect(bee.action)
     # END Problem EC
 
 
