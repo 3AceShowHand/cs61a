@@ -72,6 +72,9 @@ class Place(object):
             if self.ant is insect:
                 if hasattr(self.ant, 'container') and self.ant.container:
                     self.ant = self.ant.ant
+                # QueenAnt cannot be removed.
+                elif hasattr(self.ant, 'queen_count') and self.ant.true_queen:
+                    return
                 else:
                     self.ant = None
             else:
@@ -433,48 +436,43 @@ class TankAnt(BodyguardAnt):
             self.ant.action(colony)
 
 
-if __name__ == "__main__":
-    from ants import *
-    hive, layout = Hive(make_test_assault_plan()), dry_layout
-    dimensions = (1, 9)
-    colony = AntColony(None, hive, ant_types(), layout, dimensions)
-    # Placement of ants
-    tank0 = TankAnt()
-    tank1 = TankAnt()
-    harvester0 = HarvesterAnt()
-    harvester1 = HarvesterAnt()
-    place0 = colony.places['tunnel_0_0']
-    place1 = colony.places['tunnel_0_1']
-    # Add tank before harvester
-    place0.add_insect(tank0)
-    place0.add_insect(harvester0)
-    colony.food = 0
-    tank0.action(colony)
-    colony.food
-
-
-class QueenAnt(Ant):  # You should change this line
+class QueenAnt(ScubaThrower):  # You should change this line
     """The Queen of the colony.  The game is over if a bee enters her place."""
 
     name = 'Queen'
     # BEGIN Problem 9
-    "*** REPLACE THIS LINE ***"
-    implemented = False   # Change to True to view in the GUI
+    food_cost = 7
+    implemented = True   # Change to True to view in the GUI
+    queen_count = 0
     # END Problem 9
 
     def __init__(self):
-        # BEGIN Problem 9
-        "*** REPLACE THIS LINE ***"
-        # END Problem 9
+        ScubaThrower.__init__(self, armor=1)
+        self.doubled = []
+        if QueenAnt.queen_count == 0:
+            self.true_queen = True
+            QueenAnt.queen_count += 1
+        else:
+            self.true_queen = False
+
 
     def action(self, colony):
         """A queen ant throws a leaf, but also doubles the damage of ants
         in her tunnel.
-
         Impostor queens do only one thing: reduce their own armor to 0.
         """
         # BEGIN Problem 9
-        "*** REPLACE THIS LINE ***"
+        if self.true_queen:
+            ScubaThrower.action(self, colony)
+            place = self.place.exit
+            while place:
+                if place.ant and place.ant not in self.doubled:
+                    place.ant.damage *= 2
+                    self.doubled.append(place.ant)
+                place = place.exit
+
+        else:
+            self.reduce_armor(self.armor)
         # END Problem 9
 
     def reduce_armor(self, amount):
@@ -482,8 +480,11 @@ class QueenAnt(Ant):  # You should change this line
         remaining, signal the end of the game.
         """
         # BEGIN Problem 9
-        "*** REPLACE THIS LINE ***"
+        ScubaThrower.reduce_armor(self, amount)
+        if self.true_queen and self.armor <= 0:
+            bees_win()
         # END Problem 9
+
 
 class AntRemover(Ant):
     """Allows the player to remove ants from the board in the GUI."""
