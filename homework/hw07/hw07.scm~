@@ -91,9 +91,7 @@
 
 (define (intersect s t)
     (cond ((or (empty? s) (empty? t)) nil)
-          ((= (car s) (car t)) (cons (car s) (intersect (cdr s) (cdr t))))
-          ((< (car s) (car t)) (intersect (cdr s) t))
-          ((> (car s) (car t)) (intersect s (cdr t)))
+          'YOUR-CODE-HERE
           (else nil) ; replace this line
           ))
 
@@ -115,7 +113,22 @@
 (define (union s t)
     (cond ((empty? s) t)
           ((empty? t) s)
-          ((= (car s) (car t)) (cons (car s) (union (cdr s) (cdr t))))
-          ((< (car s) (car t)) (cons (car s) (union (cdr s) t)))
-          (else (cons (car t) (union s (cdr t))))
+          'YOUR-CODE-HERE
+          (else nil) ; replace this line
           ))
+
+
+(define (extend s t)
+    (cond ((empty? s) t)
+          (else (list (car s) (extend (cdr s) t)))
+    )
+)
+
+(define (keep s fn)
+    (cond ((empty? s) s)
+          (else
+          (define kept (keep (cdr s) fn))
+          ((not (if (empty? (fn (car s)))))
+            (list (car s) kept))
+          (else kept)))
+)

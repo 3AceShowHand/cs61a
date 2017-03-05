@@ -1,4 +1,4 @@
-(define (substitute s old new)
+(define (substitiute s old new)
   'YOUR-CODE-HERE
 )
 

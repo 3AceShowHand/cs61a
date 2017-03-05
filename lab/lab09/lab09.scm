@@ -2,25 +2,35 @@
 
 ; Q2
 (define (cube x)
-  'YOUR-CODE-HERE
+  (* x x x)
 )
 
 
 ; Q3
 (define (over-or-under x y)
-  'YOUR-CODE-HERE
+    (if (< x y)
+        -1
+        (if (= x y)
+            0
+            1)
+    )
 )
-
 
 ; Q4
 (define lst
-  'YOUR-CODE-HERE
-)
-  
+    (cons (cons 1 '())
+          (cons 2
+                (cons (cons 3 4)
+                      (cons 5 '()))))
+)  
 
 ; Q5
 (define (remove item lst)
-  'YOUR-CODE-HERE
+    (cond
+        ((null? lst) nil)
+        ((= (car lst) item) (remove item (cdr lst)))
+        (else (cons (car lst) (remove item (cdr lst))))
+    )
 )
 
 ;;; Tests
@@ -35,18 +45,22 @@
 
 ; Q6
 (define (filter f lst)
-  'YOUR-CODE-HERE
+    (cond
+        ((null? lst) nil)
+        ((f (car lst)) (cons (car lst) (filter f (cdr lst))))
+        (else (filter f (cdr lst)))
+    )
 )
 
 
 ; Q7
 (define (make-adder num)
-  'YOUR-CODE-HERE
+  (lambda (x) (+ x num))
 )
 
 
 ; Q8
 (define (composed f g)
-  'YOUR-CODE-HERE
+  (lambda (x) (f (g x)))
 )
 
