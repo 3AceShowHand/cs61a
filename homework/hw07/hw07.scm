@@ -1,5 +1,6 @@
 (define (cddr s)
-  (cdr (cdr s)))
+  (cdr (cdr s))
+)
 
 (define (cadr s)
   (car (cdr s)) 
@@ -9,14 +10,12 @@
   (car (cddr s))
 )
 
-
 (define (sign x)
   (cond
       ((< 0 x) 1)
       ((> 0 x) -1)
       (else 0)
 ))
-
 
 (define (square x) (* x x))
 
@@ -29,10 +28,13 @@
   )
 )
 
-
 (define (ordered? s)
-  'YOUR-CODE-HERE
-  nil
+    (cond
+       ((or (= 0 (length s)) (= 1 (length s))) (True))
+       ((= 2 (length s)) (cond
+                               ((< (cadr s) (car s)) False)
+                               (else True)))
+       (else (and (ordered? (list(car s) (cadr s))) (ordered? (cdr s)))))
 )
 
 
@@ -99,5 +101,3 @@
           'YOUR-CODE-HERE
           (else nil) ; replace this line
           ))
-
-
