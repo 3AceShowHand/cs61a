@@ -39,8 +39,16 @@
 
 
 (define (nodots s)
-  'YOUR-CODE-HERE
-  nil
+    (define (dotted? s) 
+                (and (pair? s) (not (or (pair? (cdr s))
+                                        (null? (cdr s))
+                                        ))))
+    (cond
+      ((null? s) s)
+      ((dotted? s) (list (nodots (car s)) (cdr s)))
+      ((pair? s) (cons (nodots (car s)) (nodots (cdr s))))
+      (else s)
+    )
 )
 
 
@@ -49,9 +57,11 @@
 (define (empty? s) (null? s))
 
 (define (contains? s v)
-    (cond ((empty? s) false)
-          'YOUR-CODE-HERE
-          (else nil) ; replace this line
+    (cond 
+        ((empty? s) false)
+        ((> (car s) v) False)
+        ((= (car s) v) True)  
+        (else (contains? (cdr s) v))
           ))
 
 ; Equivalent Python code, for your reference:
@@ -70,16 +80,21 @@
 ;         return contains(s.rest, v)
 
 (define (add s v)
-    (cond ((empty? s) (list v))
-          'YOUR-CODE-HERE
-          (else nil) ; replace this line
-          ))
+    (cond 
+        ((empty? s) (list v))
+        ((contains? s  v) s)
+        (else
+            (cond
+                ((< v (car s)) (cons v s))
+                (else (cons (car s) (add (cdr s) v)))
+        ))))
 
 (define (intersect s t)
     (cond ((or (empty? s) (empty? t)) nil)
           'YOUR-CODE-HERE
           (else nil) ; replace this line
           ))
+
 
 ; Equivalent Python code, for your reference:
 ;
@@ -101,3 +116,19 @@
           'YOUR-CODE-HERE
           (else nil) ; replace this line
           ))
+
+
+(define (extend s t)
+    (cond ((empty? s) t)
+          (else (list (car s) (extend (cdr s) t)))
+    )
+)
+
+(define (keep s fn)
+    (cond ((empty? s) s)
+          (else
+          (define kept (keep (cdr s) fn))
+          ((not (if (empty? (fn (car s)))))
+            (list (car s) kept))
+          (else kept)))
+)
