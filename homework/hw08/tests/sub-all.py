@@ -7,11 +7,10 @@ test = {
         {
           'code': r"""
           scm> (sub-all '(go ((bears))) '(go bears) '(big game))
-          de1ce669d5bcf16a8301d1cb5f77a589
-          # locked
+          (big ((game)))
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         },
         {
           'code': r"""

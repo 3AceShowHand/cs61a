@@ -1,10 +1,18 @@
-(define (substitiute s old new)
-  'YOUR-CODE-HERE
+(define (substitute s old new)
+    (cond
+        ((null? s) nil)
+        ((list? (car s)) (cons (substitute (car s) old new) (substitute (cdr s) old new)))
+        ((eq? (car s) old) (cons new (substitute (cdr s) old new)))
+        (else (cons (car s) (substitute (cdr s) old new)))
+    )
 )
 
 
 (define (sub-all s olds news)
-  'YOUR-CODE-HERE
+    (if (null? olds)
+        s
+        (sub-all (substitute s (car olds) (car news)) (cdr olds) (cdr news))
+    )
 )
 
 
@@ -21,6 +29,7 @@
 
 ; Variables are represented as symbols
 (define (variable? x) (symbol? x))
+
 (define (same-variable? v1 v2)
   (and (variable? v1) (variable? v2) (eq? v1 v2)))
 
@@ -34,9 +43,12 @@
         ((=number? a2 0) a1)
         ((and (number? a1) (number? a2)) (+ a1 a2))
         (else (list '+ a1 a2))))
+
 (define (sum? x)
   (and (list? x) (eq? (car x) '+)))
+
 (define (addend s) (cadr s))
+
 (define (augend s) (caddr s))
 
 ; Products are represented as lists that start with *.
@@ -46,18 +58,25 @@
       ((=number? m2 1) m1)
       ((and (number? m1) (number? m2)) (* m1 m2))
       (else (list '* m1 m2))))
+
 (define (product? x)
   (and (list? x) (eq? (car x) '*)))
+
 (define (multiplier p) (cadr p))
+
 (define (multiplicand p) (caddr p))
 
-(define (derive-sum expr var)
-  'YOUR-CODE-HERE
-  )
+(define (derive-sum exp var)
+    (make-sum (derive (addend exp) var) (derive (augend exp) var))
+)
+
 
 (define (derive-product expr var)
-  'YOUR-CODE-HERE
+  (make-sum
+    (make-product (derive (addend expr) var) (augend expr))
+    (make-product (addend expr) (derive (augend expr) var))
   )
+)
 
 ; Exponentiations are represented as lists that start with ^.
 (define (make-exp base exponent)
