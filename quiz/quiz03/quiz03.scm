@@ -12,8 +12,12 @@
 ; All takes a predicate procedure f and a list s. It returns whether (f x) is
 ; a true value for every element x in s.
 (define (all f s)
-    'YOUR-CODE-HERE
+    (cond ((null? s) True)
+          ((f (car s)) (and (f (car s)) (all f (cdr s))))
+          (else (f (car s)))
+    )
 )
+
 
 ; Every takes a two-argument predicate g and a list s. It returns a new list
 ; containing only elements x in s for which (g x y) is true for every y in s.

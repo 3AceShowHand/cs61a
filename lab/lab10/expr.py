@@ -66,6 +66,7 @@ class Expr:
         args = '(' + comma_separated([repr(arg) for arg in self.args]) + ')'
         return type(self).__name__ + args
 
+
 class Literal(Expr):
     """A literal is notation for representing a fixed value in code. In
     PyCombinator, the only literals are numbers. A `Literal` should always
@@ -82,6 +83,7 @@ class Literal(Expr):
 
     def __str__(self):
         return str(self.value)
+
 
 class Name(Expr):
     """A `Name` is a variable. When evaluated, we look up the value of the
@@ -107,11 +109,13 @@ class Name(Expr):
         ...     print('Exception raised!')
         Exception raised!
         """
-        "*** YOUR CODE HERE ***"
-        pass # REPLACE THIS LINE
+        if self.string not in env:
+            raise NameError("name '{}' is not defined".format(self.string))
+        return env[self.string]
 
     def __str__(self):
         return self.string
+
 
 class LambdaExpr(Expr):
     """A lambda expression, which evaluates to a `LambdaFunction`.
@@ -140,6 +144,7 @@ class LambdaExpr(Expr):
             return 'lambda: ' + body
         else:
             return 'lambda ' + comma_separated(self.parameters) + ': ' + body
+
 
 class CallExpr(Expr):
     """A call expression represents a function call.
@@ -174,8 +179,10 @@ class CallExpr(Expr):
         >>> read('add(mul(3, 4), b)').eval(new_env)
         Number(14)
         """
-        "*** YOUR CODE HERE ***"
-        pass # REPLACE THIS LINE
+        function = self.operator.eval(env)
+        arguments = [operand.eval(env) for operand in self.operands]
+        return function.apply(arguments)
+
 
     def __str__(self):
         function = str(self.operator)
@@ -184,6 +191,7 @@ class CallExpr(Expr):
             return '(' + function + ')' + args
         else:
             return function + args
+
 
 class Value:
     """
@@ -239,6 +247,7 @@ class Value:
         args = '(' + comma_separated([repr(arg) for arg in self.args]) + ')'
         return type(self).__name__ + args
 
+
 class Number(Value):
     """A plain number. Attempting to apply a `Number` (e.g. as in 4(2, 3)) will
     raise an exception.
@@ -255,6 +264,7 @@ class Number(Value):
 
     def __str__(self):
         return str(self.value)
+
 
 class LambdaFunction(Value):
     """A lambda function. Lambda functions are created in the LambdaExpr.eval
@@ -289,11 +299,15 @@ class LambdaFunction(Value):
         if len(self.parameters) != len(arguments):
             raise TypeError("Cannot match parameters {} to arguments {}".format(
                 comma_separated(self.parameters), comma_separated(arguments)))
-        "*** YOUR CODE HERE ***"
+        env = self.parent.copy()
+        for parameter, arguments in zip(self.parameters, arguments):
+            env[parameter] = arguments
+        return self.body.eval(env)
 
     def __str__(self):
         definition = LambdaExpr(self.parameters, self.body)
         return '<function {}>'.format(definition)
+
 
 class PrimitiveFunction(Value):
     """A built-in function. For a full list of built-in functions, see
