@@ -18,11 +18,10 @@
     )
 )
 
-
 ; Every takes a two-argument predicate g and a list s. It returns a new list
 ; containing only elements x in s for which (g x y) is true for every y in s.
 (define (every g s)
-    'YOUR-CODE-HERE
+    
 )
 
 ; Return a minimum card.

@@ -8,6 +8,7 @@ from ucb import main, trace
 # Eval/Apply #
 ##############
 
+
 def scheme_eval(expr, env, _=None): # Optional third argument is ignored
     """Evaluate Scheme expression EXPR in environment ENV.
 
@@ -72,14 +73,16 @@ class Frame:
     def define(self, symbol, value):
         """Define Scheme SYMBOL to have VALUE."""
         # BEGIN PROBLEM 3
-        "*** REPLACE THIS LINE ***"
+        self.bindings[symbol] = value
         # END PROBLEM 3
 
     def lookup(self, symbol):
         """Return the value bound to SYMBOL. Errors if SYMBOL is not found."""
         # BEGIN PROBLEM 3
-        "*** REPLACE THIS LINE ***"
-        # END PROBLEM 3
+        if symbol in self.bindings.keys():
+            return self.bindings[symbol]
+        elif self.parent and symbol in self.parent.bindings.keys():
+            return self.parent.bindings[symbol]
         raise SchemeError('unknown identifier: {0}'.format(symbol))
 
     def make_child_frame(self, formals, vals):
@@ -135,8 +138,14 @@ class PrimitiveProcedure(Procedure):
             python_args.append(args.first)
             args = args.second
         # BEGIN PROBLEM 4
-        "*** REPLACE THIS LINE ***"
+        if self.use_env:
+            python_args.append(env)
+        try:
+            return self.fn(*python_args)
+        except TypeError:
+            raise SchemeError
         # END PROBLEM 4
+
 
 class UserDefinedProcedure(Procedure):
     """A procedure defined by an expression."""
@@ -196,11 +205,12 @@ def do_define_form(expressions, env):
     if scheme_symbolp(target):
         check_form(expressions, 2, 2)
         # BEGIN PROBLEM 6A
-        "*** REPLACE THIS LINE ***"
+        env.define(target, scheme_eval(expressions.second, env))
+        return target
         # END PROBLEM 6A
     elif isinstance(target, Pair) and scheme_symbolp(target.first):
         # BEGIN PROBLEM 10
-        "*** REPLACE THIS LINE ***"
+        pass
         # END PROBLEM 10
     else:
         bad_target = target.first if isinstance(target, Pair) else target
