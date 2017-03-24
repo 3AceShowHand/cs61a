@@ -15,6 +15,8 @@ def scale(s, k):
     [2, 4, 6, 8, 10]
     """
     "*** YOUR CODE HERE ***"
+    for item in s:
+        yield item * k
 
 
 # Q7
@@ -34,7 +36,14 @@ def merge(s0, s1):
     i0, i1 = iter(s0), iter(s1)
     e0, e1 = next(i0), next(i1)
     "*** YOUR CODE HERE ***"
-
+    while True:
+        yield min(e0, e1)
+        if e0 < e1:
+            e0 = next(i0)
+        elif e1 < e0:
+            e1 = next(i1)
+        else:
+            e0, e1 = next(i0), next(i1)
 
 
 # Q8

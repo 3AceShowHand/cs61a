@@ -25,13 +25,21 @@ class IteratorRestart:
     """
     def __init__(self, start, end):
         "*** YOUR CODE HERE ***"
+        self.current = start
+        self.end = end
+        self.start = start
 
     def __next__(self):
         "*** YOUR CODE HERE ***"
+        if self.current > self.end:
+            raise StopIteration
+        result = self.current
+        self.current += 1
+        return result
 
     def __iter__(self):
-        "*** YOUR CODE HERE ***"
-
+        self.current = self.start
+        return self
 
 # Q3
 class Str:
@@ -48,8 +56,20 @@ class Str:
     >>> for char in s:    # a standard iterator does not restart
     ...     print(char)
     """
-    "*** YOUR CODE HERE ***"
+    def __init__(self, s):
+        self.str = s
+        self.current = 0
+        self.end = len(self.str)
 
+    def __next__(self):
+        if self.current == self.end:
+            raise StopIteration
+        result = self.str[self.current]
+        self.current += 1
+        return result
+
+    def __iter__(self):
+        return self
 
 ##############
 # Generators #
@@ -72,6 +92,10 @@ def countdown(n):
     0
     """
     "*** YOUR CODE HERE ***"
+    while n >= 0:
+        yield n
+        n -= 1
+
 
 class Countdown:
     """
@@ -89,6 +113,23 @@ class Countdown:
     0
     """
     "*** YOUR CODE HERE ***"
+    def __init__(self, start):
+        self.start = start
+        self.end = 0
+        self.current = self.start
+        
+
+    def __next__(self):
+        if self.current < self.end:
+            raise StopIteration
+        result = self.current
+        self.current -= 1
+        return result
+
+    def __iter__(self):
+        self.current = self.start
+        return self
+
 
 # Q5
 def hailstone(n):
@@ -105,4 +146,10 @@ def hailstone(n):
     1
     """
     "*** YOUR CODE HERE ***"
-
+    while n != 1:
+        yield n
+        if n % 2 == 0:
+            n = n // 2
+        else:
+            n = 3 * n + 1
+    yield n

@@ -18,14 +18,12 @@ test = {
           ...        return self
           >>> iterator = IteratorA()
           >>> [num for num in iterator]
-          d9e9ce9e113c6e01c8489077f0a07f46
-          # locked
+          [30, 50, 70, 90, 110]
           >>> [num for num in iterator]
-          1f73c5ccb26eee699414362be850992d
-          # locked
+          []
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         }
       ],
       'scored': False,

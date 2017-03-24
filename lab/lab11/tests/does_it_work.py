@@ -5,14 +5,14 @@ test = {
     {
       'cases': [
         {
-          'answer': 'b1441d8506f54e95da548bbd3b2214a2',
+          'answer': 'No problem, this is a beautiful iterator!',
           'choices': [
             'No problem, this is a beautiful iterator!',
             'Uh oh, this is missing __next__.',
             'This "iterator" doesn\'t even define __iter__.'
           ],
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'question': r"""
           Does IteratorA work?
           
@@ -31,14 +31,14 @@ test = {
           """
         },
         {
-          'answer': '7b6d9694c7f303c3f0a08df9f9cc0c9d',
+          'answer': 'Uh oh, this is missing __next__.',
           'choices': [
             'No problem, this is a beautiful iterator!',
             'Uh oh, this is missing __next__.',
             'This "iterator" doesn\'t even define __iter__.'
           ],
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'question': r"""
           Does IteratorB work?
           
@@ -51,14 +51,14 @@ test = {
           """
         },
         {
-          'answer': 'c4dfebecd5522ed75fb7cc481b2568a0',
+          'answer': 'This "iterator" doesn\'t even define __iter__.',
           'choices': [
             'No problem, this is a beautiful iterator!',
             'Uh oh, this is missing __next__.',
             'This "iterator" doesn\'t even define __iter__.'
           ],
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'question': r"""
           Does IteratorC work?
           
@@ -74,14 +74,14 @@ test = {
           """
         },
         {
-          'answer': 'b1441d8506f54e95da548bbd3b2214a2',
+          'answer': 'No problem, this is a beautiful iterator!',
           'choices': [
             'No problem, this is a beautiful iterator!',
             'Uh oh, this is missing __next__.',
             'This "iterator" doesn\'t even define __iter__.'
           ],
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'question': r"""
           Does IteratorD work?
           
